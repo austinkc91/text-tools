@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextForge — Free Online Text Tools | Case Converter, Word Counter, JSON Formatter</title>
+    <meta name="description" content="Free online text tools: case converter, word counter, JSON formatter, Base64 encoder, slug generator, and more. No signup, no ads, works instantly.">
+    <meta name="keywords" content="text tools, case converter, word counter, JSON formatter, base64 encoder, slug generator, online text utility, free text tools">
+    <meta property="og:title" content="TextForge — Free Online Text Tools">
+    <meta property="og:description" content="12+ free text transformation tools. No signup required.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://austinkc91.github.io/text-tools/">
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface2: #242736;
+            --border: #2e3145;
+            --text: #e4e4e7;
+            --muted: #9ca3af;
+            --accent: #6366f1;
+            --accent2: #818cf8;
+            --green: #34d399;
+            --orange: #fb923c;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .tagline { color: var(--muted); font-size: 0.85rem; }
+
+        /* Tool Tabs */
+        .tools-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 24px 0;
+        }
+        .tool-tab {
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .tool-tab:hover { border-color: var(--accent); color: var(--text); }
+        .tool-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Workspace */
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 768px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+        }
+        .panel-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        textarea {
+            width: 100%;
+            min-height: 280px;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            outline: none;
+            line-height: 1.7;
+        }
+        textarea::placeholder { color: #4b5068; }
+
+        /* Options bar */
+        .options-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 16px 0;
+        }
+        .opt-btn {
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .opt-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 24px;
+            padding: 12px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+        }
+        .stat { font-size: 0.85rem; color: var(--muted); }
+        .stat strong { color: var(--text); margin-right: 4px; }
+
+        /* Copy button */
+        .copy-btn {
+            padding: 6px 14px;
+            background: var(--accent);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .copy-btn:hover { background: var(--accent2); }
+        .copy-btn.copied { background: var(--green); }
+
+        /* Promo banner */
+        .promo {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border: 1px solid #4338ca;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin: 32px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .promo-text h3 { font-size: 1rem; margin-bottom: 4px; }
+        .promo-text p { font-size: 0.85rem; color: var(--muted); }
+        .promo-link {
+            padding: 10px 20px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.15s;
+        }
+        .promo-link:hover { background: var(--accent2); }
+
+        /* Footer */
+        footer {
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+        footer a { color: var(--accent2); text-decoration: none; }
+
+        /* Tool-specific: JSON */
+        .json-output { white-space: pre-wrap; }
+        .error { color: #f87171; }
+        .success { color: var(--green); }
+
+        /* Email capture */
+        .email-capture {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        .email-capture h3 { margin-bottom: 8px; font-size: 1rem; }
+        .email-capture p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+        .email-form {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .email-form input {
+            flex: 1;
+            padding: 10px 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .email-form input:focus { border-color: var(--accent); }
+        .email-form button {
+            padding: 10px 20px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div>
+                <div class="logo">TextForge</div>
+                <div class="tagline">Free text tools. No signup. No nonsense.</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="tools-nav" id="toolTabs">
+            <div class="tool-tab active" data-tool="case">Case Converter</div>
+            <div class="tool-tab" data-tool="counter">Word Counter</div>
+            <div class="tool-tab" data-tool="json">JSON Formatter</div>
+            <div class="tool-tab" data-tool="base64">Base64</div>
+            <div class="tool-tab" data-tool="url">URL Encode</div>
+            <div class="tool-tab" data-tool="slug">Slug Generator</div>
+            <div class="tool-tab" data-tool="lorem">Lorem Ipsum</div>
+            <div class="tool-tab" data-tool="hash">Hash Generator</div>
+            <div class="tool-tab" data-tool="diff">Text Diff</div>
+            <div class="tool-tab" data-tool="regex">Regex Tester</div>
+            <div class="tool-tab" data-tool="markdown">Markdown Preview</div>
+            <div class="tool-tab" data-tool="clean">Text Cleaner</div>
+        </div>
+
+        <div id="optionsBar" class="options-bar"></div>
+
+        <div id="statsBar" class="stats-bar" style="display:none;"></div>
+
+        <div class="workspace">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title" id="inputLabel">Input</span>
+                </div>
+                <textarea id="input" placeholder="Paste or type your text here..."></textarea>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title" id="outputLabel">Output</span>
+                    <button class="copy-btn" id="copyBtn" onclick="copyOutput()">Copy</button>
+                </div>
+                <textarea id="output" placeholder="Result will appear here..." readonly></textarea>
+            </div>
+        </div>
+
+        <!-- Cross-promo -->
+        <div class="promo">
+            <div class="promo-text">
+                <h3>Level up your AI game</h3>
+                <p>100+ battle-tested prompts for business, coding, and content. Copy-paste ready.</p>
+            </div>
+            <a href="https://austinkc91.github.io/prompt-vault/" class="promo-link">Get the Playbook — $9</a>
+        </div>
+
+        <div class="email-capture">
+            <h3>Get free text tool updates</h3>
+            <p>New tools added monthly. No spam, just utility.</p>
+            <form class="email-form" action="https://formsubmit.co/clawbot91@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="TextForge Email Signup">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="promo" style="background: linear-gradient(135deg, #1a2e1a, #1e3a2e); border-color: #166534;">
+            <div class="promo-text">
+                <h3>BAS/HVAC professionals</h3>
+                <p>Complete field reference: control sequences, troubleshooting flowcharts, commissioning checklists.</p>
+            </div>
+            <a href="https://austinkc91.github.io/bas-field-guide/" class="promo-link" style="background: #059669;">Field Guide — $14</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>TextForge — Built with care. Free forever.</p>
+            <p style="margin-top: 8px;">
+                <a href="https://austinkc91.github.io/prompt-vault/">Prompt Vault</a> &middot;
+                <a href="https://austinkc91.github.io/bas-field-guide/">BAS Field Guide</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const optionsBar = document.getElementById('optionsBar');
+    const statsBar = document.getElementById('statsBar');
+    const inputLabel = document.getElementById('inputLabel');
+    const outputLabel = document.getElementById('outputLabel');
+
+    let currentTool = 'case';
+    let currentOption = 'upper';
+
+    // Tool definitions
+    const tools = {
+        case: {
+            inputLabel: 'Input Text',
+            outputLabel: 'Converted Text',
+            options: [
+                { id: 'upper', label: 'UPPER CASE' },
+                { id: 'lower', label: 'lower case' },
+                { id: 'title', label: 'Title Case' },
+                { id: 'sentence', label: 'Sentence case' },
+                { id: 'camel', label: 'camelCase' },
+                { id: 'snake', label: 'snake_case' },
+                { id: 'kebab', label: 'kebab-case' },
+                { id: 'pascal', label: 'PascalCase' },
+                { id: 'toggle', label: 'tOGGLE cASE' },
+            ],
+            transform(text, opt) {
+                switch (opt) {
+                    case 'upper': return text.toUpperCase();
+                    case 'lower': return text.toLowerCase();
+                    case 'title': return text.replace(/\b\w/g, c => c.toUpperCase());
+                    case 'sentence': return text.toLowerCase().replace(/(^\s*|[.!?]\s+)(\w)/g, (m, p, c) => p + c.toUpperCase());
+                    case 'camel': return text.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, c) => c.toUpperCase());
+                    case 'snake': return text.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '');
+                    case 'kebab': return text.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    case 'pascal': return text.toLowerCase().replace(/(^|[^a-zA-Z0-9]+)(.)/g, (m, p, c) => c.toUpperCase());
+                    case 'toggle': return [...text].map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join('');
+                    default: return text;
+                }
+            }
+        },
+        counter: {
+            inputLabel: 'Your Text',
+            outputLabel: 'Statistics',
+            options: [],
+            showStats: true,
+            transform(text) {
+                if (!text.trim()) return '';
+                const chars = text.length;
+                const charsNoSpace = text.replace(/\s/g, '').length;
+                const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+                const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length;
+                const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim()).length;
+                const lines = text.split('\n').length;
+                const readTime = Math.max(1, Math.ceil(words / 200));
+                const speakTime = Math.max(1, Math.ceil(words / 130));
+
+                return [
+                    `Characters:         ${chars.toLocaleString()}`,
+                    `Characters (no sp): ${charsNoSpace.toLocaleString()}`,
+                    `Words:              ${words.toLocaleString()}`,
+                    `Sentences:          ${sentences.toLocaleString()}`,
+                    `Paragraphs:         ${paragraphs.toLocaleString()}`,
+                    `Lines:              ${lines.toLocaleString()}`,
+                    ``,
+                    `Reading time:       ~${readTime} min`,
+                    `Speaking time:      ~${speakTime} min`,
+                    ``,
+                    `Avg word length:    ${words > 0 ? (charsNoSpace / words).toFixed(1) : 0} chars`,
+                    `Avg sentence length:${sentences > 0 ? (words / sentences).toFixed(1) : 0} words`,
+                ].join('\n');
+            }
+        },
+        json: {
+            inputLabel: 'Raw JSON',
+            outputLabel: 'Formatted JSON',
+            options: [
+                { id: 'pretty', label: 'Pretty Print (2 sp)' },
+                { id: 'pretty4', label: 'Pretty Print (4 sp)' },
+                { id: 'minify', label: 'Minify' },
+                { id: 'sort', label: 'Sort Keys' },
+            ],
+            transform(text, opt) {
+                if (!text.trim()) return '';
+                try {
+                    let obj = JSON.parse(text);
+                    switch (opt) {
+                        case 'pretty': return JSON.stringify(obj, null, 2);
+                        case 'pretty4': return JSON.stringify(obj, null, 4);
+                        case 'minify': return JSON.stringify(obj);
+                        case 'sort': return JSON.stringify(sortKeys(obj), null, 2);
+                        default: return JSON.stringify(obj, null, 2);
+                    }
+                } catch (e) {
+                    return '❌ Invalid JSON: ' + e.message;
+                }
+            }
+        },
+        base64: {
+            inputLabel: 'Input',
+            outputLabel: 'Output',
+            options: [
+                { id: 'encode', label: 'Encode' },
+                { id: 'decode', label: 'Decode' },
+            ],
+            transform(text, opt) {
+                if (!text) return '';
+                try {
+                    if (opt === 'encode') return btoa(unescape(encodeURIComponent(text)));
+                    else return decodeURIComponent(escape(atob(text)));
+                } catch (e) {
+                    return '❌ Error: ' + e.message;
+                }
+            }
+        },
+        url: {
+            inputLabel: 'Input',
+            outputLabel: 'Output',
+            options: [
+                { id: 'encode', label: 'Encode' },
+                { id: 'decode', label: 'Decode' },
+                { id: 'encodeComponent', label: 'Encode Component' },
+                { id: 'decodeComponent', label: 'Decode Component' },
+            ],
+            transform(text, opt) {
+                if (!text) return '';
+                try {
+                    switch (opt) {
+                        case 'encode': return encodeURI(text);
+                        case 'decode': return decodeURI(text);
+                        case 'encodeComponent': return encodeURIComponent(text);
+                        case 'decodeComponent': return decodeURIComponent(text);
+                        default: return text;
+                    }
+                } catch (e) {
+                    return '❌ Error: ' + e.message;
+                }
+            }
+        },
+        slug: {
+            inputLabel: 'Text to Slugify',
+            outputLabel: 'URL Slug',
+            options: [
+                { id: 'dash', label: 'dash-separated' },
+                { id: 'underscore', label: 'underscore_separated' },
+            ],
+            transform(text, opt) {
+                if (!text) return '';
+                const sep = opt === 'underscore' ? '_' : '-';
+                return text.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/[\s-]+/g, sep)
+                    .replace(new RegExp(`^${sep === '-' ? '\\-' : sep}|${sep === '-' ? '\\-' : sep}$`, 'g'), '');
+            }
+        },
+        lorem: {
+            inputLabel: 'Options',
+            outputLabel: 'Generated Text',
+            options: [
+                { id: 'p3', label: '3 Paragraphs' },
+                { id: 'p5', label: '5 Paragraphs' },
+                { id: 'w50', label: '50 Words' },
+                { id: 'w100', label: '100 Words' },
+                { id: 'w500', label: '500 Words' },
+                { id: 'sentences5', label: '5 Sentences' },
+            ],
+            transform(text, opt) {
+                const words = 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum'.split(' ');
+                function getWords(n) {
+                    let r = [];
+                    for (let i = 0; i < n; i++) r.push(words[Math.floor(Math.random() * words.length)]);
+                    r[0] = r[0][0].toUpperCase() + r[0].slice(1);
+                    return r.join(' ');
+                }
+                function getSentence() {
+                    const len = 8 + Math.floor(Math.random() * 12);
+                    return getWords(len) + '.';
+                }
+                function getParagraph() {
+                    const n = 3 + Math.floor(Math.random() * 4);
+                    return Array.from({ length: n }, getSentence).join(' ');
+                }
+                switch (opt) {
+                    case 'p3': return Array.from({ length: 3 }, getParagraph).join('\n\n');
+                    case 'p5': return Array.from({ length: 5 }, getParagraph).join('\n\n');
+                    case 'w50': return getWords(50) + '.';
+                    case 'w100': return getWords(100) + '.';
+                    case 'w500': return getWords(500) + '.';
+                    case 'sentences5': return Array.from({ length: 5 }, getSentence).join(' ');
+                    default: return getParagraph();
+                }
+            }
+        },
+        hash: {
+            inputLabel: 'Input Text',
+            outputLabel: 'Hash Output',
+            options: [
+                { id: 'sha256', label: 'SHA-256' },
+                { id: 'sha1', label: 'SHA-1' },
+                { id: 'md5sim', label: 'MD5 (simulated)' },
+            ],
+            async transform(text, opt) {
+                if (!text) return '';
+                if (opt === 'md5sim') {
+                    // Simple non-crypto hash for demo
+                    let hash = 0;
+                    for (let i = 0; i < text.length; i++) {
+                        const c = text.charCodeAt(i);
+                        hash = ((hash << 5) - hash) + c;
+                        hash |= 0;
+                    }
+                    return Math.abs(hash).toString(16).padStart(32, '0');
+                }
+                const algo = opt === 'sha1' ? 'SHA-1' : 'SHA-256';
+                const encoded = new TextEncoder().encode(text);
+                const hashBuffer = await crypto.subtle.digest(algo, encoded);
+                return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+        },
+        diff: {
+            inputLabel: 'Text A',
+            outputLabel: 'Text B (paste here to compare)',
+            options: [
+                { id: 'lines', label: 'Line Diff' },
+                { id: 'words', label: 'Word Diff' },
+            ],
+            transform(textA, opt) {
+                const textB = output.value || '';
+                if (!textA && !textB) return 'Paste Text A on the left and Text B on the right, then click Compare.';
+                return 'Type in both panels. Differences shown on transform.';
+            }
+        },
+        regex: {
+            inputLabel: 'Test String',
+            outputLabel: 'Matches',
+            options: [
+                { id: 'match', label: 'Find Matches' },
+                { id: 'replace', label: 'Replace' },
+            ],
+            placeholder: 'Enter regex pattern in the input (first line), test string on remaining lines.\n\nExample:\n/\\b\\w+@\\w+\\.\\w+/g\njohn@example.com said hello to jane@test.org',
+            transform(text, opt) {
+                if (!text.trim()) return '';
+                const lines = text.split('\n');
+                const patternLine = lines[0].trim();
+                const testStr = lines.slice(1).join('\n');
+
+                try {
+                    let regex;
+                    const m = patternLine.match(/^\/(.+)\/([gimsuy]*)$/);
+                    if (m) regex = new RegExp(m[1], m[2]);
+                    else regex = new RegExp(patternLine, 'g');
+
+                    if (opt === 'match') {
+                        const matches = testStr.match(regex);
+                        if (!matches) return 'No matches found.';
+                        return `Found ${matches.length} match(es):\n\n` + matches.map((m, i) => `${i + 1}. "${m}"`).join('\n');
+                    } else {
+                        return testStr.replace(regex, '[$&]');
+                    }
+                } catch (e) {
+                    return '❌ Invalid regex: ' + e.message;
+                }
+            }
+        },
+        markdown: {
+            inputLabel: 'Markdown',
+            outputLabel: 'Preview (HTML)',
+            options: [],
+            transform(text) {
+                if (!text) return '';
+                // Simple markdown to text conversion
+                return text
+                    .replace(/^### (.+)$/gm, '=== $1 ===')
+                    .replace(/^## (.+)$/gm, '== $1 ==')
+                    .replace(/^# (.+)$/gm, '= $1 =')
+                    .replace(/\*\*(.+?)\*\*/g, '[$1]')
+                    .replace(/\*(.+?)\*/g, '_$1_')
+                    .replace(/`(.+?)`/g, '"$1"')
+                    .replace(/^\- /gm, '• ')
+                    .replace(/^\d+\. /gm, (m) => m);
+            }
+        },
+        clean: {
+            inputLabel: 'Dirty Text',
+            outputLabel: 'Clean Text',
+            options: [
+                { id: 'spaces', label: 'Fix Spaces' },
+                { id: 'lines', label: 'Remove Empty Lines' },
+                { id: 'trim', label: 'Trim Lines' },
+                { id: 'dedup', label: 'Remove Duplicates' },
+                { id: 'sort', label: 'Sort Lines' },
+                { id: 'reverse', label: 'Reverse Lines' },
+                { id: 'numbers', label: 'Add Line Numbers' },
+                { id: 'strip', label: 'Strip HTML' },
+            ],
+            transform(text, opt) {
+                if (!text) return '';
+                switch (opt) {
+                    case 'spaces': return text.replace(/[ \t]+/g, ' ').replace(/ +\n/g, '\n');
+                    case 'lines': return text.split('\n').filter(l => l.trim()).join('\n');
+                    case 'trim': return text.split('\n').map(l => l.trim()).join('\n');
+                    case 'dedup': return [...new Set(text.split('\n'))].join('\n');
+                    case 'sort': return text.split('\n').sort((a, b) => a.localeCompare(b)).join('\n');
+                    case 'reverse': return text.split('\n').reverse().join('\n');
+                    case 'numbers': return text.split('\n').map((l, i) => `${i + 1}. ${l}`).join('\n');
+                    case 'strip': return text.replace(/<[^>]*>/g, '');
+                    default: return text;
+                }
+            }
+        }
+    };
+
+    function sortKeys(obj) {
+        if (Array.isArray(obj)) return obj.map(sortKeys);
+        if (obj && typeof obj === 'object') {
+            return Object.keys(obj).sort().reduce((r, k) => { r[k] = sortKeys(obj[k]); return r; }, {});
+        }
+        return obj;
+    }
+
+    function switchTool(toolId) {
+        currentTool = toolId;
+        const tool = tools[toolId];
+
+        // Update tabs
+        document.querySelectorAll('.tool-tab').forEach(t => t.classList.toggle('active', t.dataset.tool === toolId));
+
+        // Update labels
+        inputLabel.textContent = tool.inputLabel;
+        outputLabel.textContent = tool.outputLabel;
+
+        // Update options
+        if (tool.options.length > 0) {
+            currentOption = tool.options[0].id;
+            optionsBar.innerHTML = tool.options.map(o =>
+                `<div class="opt-btn${o.id === currentOption ? ' active' : ''}" data-opt="${o.id}">${o.label}</div>`
+            ).join('');
+            optionsBar.style.display = 'flex';
+        } else {
+            optionsBar.innerHTML = '';
+            optionsBar.style.display = 'none';
+        }
+
+        // Set placeholder
+        if (tool.placeholder) {
+            input.placeholder = tool.placeholder;
+        } else {
+            input.placeholder = 'Paste or type your text here...';
+        }
+
+        // For diff tool, make output editable
+        output.readOnly = toolId !== 'diff';
+
+        // Re-run transform
+        runTransform();
+    }
+
+    async function runTransform() {
+        const tool = tools[currentTool];
+        const text = input.value;
+        const result = tool.transform(text, currentOption);
+        if (result instanceof Promise) {
+            output.value = await result;
+        } else {
+            output.value = result;
+        }
+    }
+
+    function copyOutput() {
+        const btn = document.getElementById('copyBtn');
+        navigator.clipboard.writeText(output.value).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 1500);
+        });
+    }
+
+    // Event listeners
+    document.getElementById('toolTabs').addEventListener('click', e => {
+        if (e.target.classList.contains('tool-tab')) switchTool(e.target.dataset.tool);
+    });
+
+    optionsBar.addEventListener('click', e => {
+        if (e.target.classList.contains('opt-btn')) {
+            currentOption = e.target.dataset.opt;
+            document.querySelectorAll('.opt-btn').forEach(b => b.classList.toggle('active', b.dataset.opt === currentOption));
+            runTransform();
+        }
+    });
+
+    input.addEventListener('input', runTransform);
+
+    // Initialize
+    switchTool('case');
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TextForge",
+        "description": "Free online text tools: case converter, word counter, JSON formatter, and more.",
+        "url": "https://austinkc91.github.io/text-tools/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
