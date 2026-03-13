@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemlinenap.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://austinkc91.github.io/text-tools/</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://austinkc91.github.io/text-tools/</loc><priority>1.0</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/case-converter/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/word-counter/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/json-formatter/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/base64-encoder-decoder/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/url-encoder-decoder/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/slug-generator/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/lorem-ipsum-generator/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/hash-generator/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/text-diff/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/regex-tester/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/markdown-preview/</loc><priority>0.8</priority></url>
+  <url><loc>https://austinkc91.github.io/text-tools/text-cleaner/</loc><priority>0.8</priority></url>
 </urlset>
