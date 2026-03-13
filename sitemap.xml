@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://austinkc91.github.io/text-tools/</loc><priority>1.0</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/case-converter/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/word-counter/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/json-formatter/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/base64-encoder-decoder/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/url-encoder-decoder/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/slug-generator/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/lorem-ipsum-generator/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/hash-generator/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/text-diff/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/regex-tester/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/markdown-preview/</loc><priority>0.8</priority></url>
-  <url><loc>https://austinkc91.github.io/text-tools/text-cleaner/</loc><priority>0.8</priority></url>
-</urlset>
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:urlset xmlns:ns0="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/</ns0:loc><ns0:priority>1.0</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/case-converter/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/word-counter/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/json-formatter/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/base64-encoder-decoder/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/url-encoder-decoder/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/slug-generator/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/lorem-ipsum-generator/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/hash-generator/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/text-diff/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/regex-tester/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/markdown-preview/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+  <ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/text-cleaner/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url>
+<ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/color-converter/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url><ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/password-generator/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url><ns0:url><ns0:loc>https://austinkc91.github.io/text-tools/timestamp-converter/</ns0:loc><ns0:priority>0.8</ns0:priority></ns0:url></ns0:urlset>

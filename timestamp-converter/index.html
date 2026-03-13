@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Timestamp Converter - Unix Epoch to Date | TextForge</title>
+    <meta name="description" content="Convert Unix timestamps to human-readable dates and vice versa. Free online epoch converter with current timestamp display.">
+    <meta name="keywords" content="timestamp converter, unix timestamp, epoch converter, unix time, timestamp to date, date to timestamp, epoch time">
+    <meta property="og:title" content="Free Online Timestamp Converter - Unix Epoch to Date">
+    <meta property="og:description" content="Convert Unix timestamps to dates and dates to timestamps. Free online epoch converter.">
+    <link rel="canonical" href="https://austinkc91.github.io/text-tools/timestamp-converter/">
+    <style>
+    :root {
+        --bg: #0f1117; --surface: #1a1d27; --surface2: #242736;
+        --border: #2e3145; --text: #e4e4e7; --muted: #9ca3af;
+        --accent: #6366f1; --accent2: #818cf8; --green: #34d399;
+        --radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+    .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    .back-link:hover { color: var(--accent2); }
+    h1 { font-size: 1.8rem; margin: 32px 0 8px; }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+    .options-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; }
+    .opt-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+    .opt-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+    .opt-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+    .panel-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    textarea { width: 100%; min-height: 280px; padding: 16px; background: transparent; border: none; color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; resize: vertical; outline: none; line-height: 1.7; }
+    textarea::placeholder { color: #4b5068; }
+    input[type=text], input[type=number] { padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.9rem; outline: none; font-family: 'SF Mono', 'Fira Code', monospace; }
+    input:focus { border-color: var(--accent); }
+    .copy-btn { padding: 6px 14px; background: var(--accent); border: none; border-radius: 6px; color: white; font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+    .copy-btn:hover { background: var(--accent2); }
+    .copy-btn.copied { background: var(--green); }
+    .promo { background: linear-gradient(135deg, #1e1b4b, #312e81); border: 1px solid #4338ca; border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .promo-text h3 { font-size: 1rem; margin-bottom: 4px; }
+    .promo-text p { font-size: 0.85rem; color: var(--muted); }
+    .promo-link { padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+    .promo-link:hover { background: var(--accent2); }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 32px 0; }
+    .tool-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
+    .tool-card:hover { border-color: var(--accent); }
+    .tool-card h3 { font-size: 0.9rem; margin-bottom: 4px; }
+    .tool-card p { font-size: 0.8rem; color: var(--muted); }
+    footer { padding: 24px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; }
+    footer a { color: var(--accent2); text-decoration: none; }
+    .email-capture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 24px 0; text-align: center; }
+    .email-capture h3 { margin-bottom: 8px; font-size: 1rem; }
+    .email-capture p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+    .email-form { display: flex; gap: 8px; justify-content: center; max-width: 400px; margin: 0 auto; }
+    .email-form input { flex: 1; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; outline: none; }
+    .email-form input:focus { border-color: var(--accent); }
+    .email-form button { padding: 10px 20px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+    .color-preview { width: 100%; height: 120px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 16px; transition: background 0.2s; }
+    .input-group { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; flex-wrap: wrap; }
+    .input-group label { width: 50px; font-size: 0.85rem; color: var(--muted); }
+    .input-group input { flex: 1; min-width: 80px; }
+    .gen-btn { padding: 12px 24px; background: var(--accent); border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 16px; }
+    .gen-btn:hover { background: var(--accent2); }
+    .password-output { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.2rem; padding: 16px; background: var(--surface2); border-radius: 8px; word-break: break-all; margin-bottom: 16px; min-height: 60px; display: flex; align-items: center; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+    .checkbox-group label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; }
+    .checkbox-group input[type=checkbox] { accent-color: var(--accent); }
+    .slider-group { margin-bottom: 16px; }
+    .slider-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
+    .slider-group input[type=range] { width: 100%; accent-color: var(--accent); }
+</style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://austinkc91.github.io/text-tools/" class="logo">TextForge</a>
+            <a href="https://austinkc91.github.io/text-tools/" class="back-link">All Tools</a>
+        </div>
+    </header>
+    <main class="container">
+        <h1>Timestamp Converter</h1>
+        <p class="subtitle">Convert between Unix timestamps and human-readable dates. See the current timestamp live.</p>
+
+        <div class="panel" style="padding: 24px; margin-bottom: 24px; text-align: center;">
+            <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 8px;">Current Unix Timestamp</div>
+            <div id="currentTs" style="font-size: 2rem; font-weight: 800; font-family: monospace; color: var(--accent2);"></div>
+            <div id="currentDate" style="font-size: 0.9rem; color: var(--muted); margin-top: 4px;"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div class="panel" style="padding: 24px;">
+                <h3 style="font-size: 1rem; margin-bottom: 16px;">Timestamp to Date</h3>
+                <div class="input-group">
+                    <input type="text" id="tsInput" placeholder="Enter Unix timestamp" style="flex: 1;" oninput="tsToDate()">
+                </div>
+                <div class="options-bar" style="padding: 8px 0;">
+                    <div class="opt-btn active" data-unit="s" onclick="setUnit('s', this)">Seconds</div>
+                    <div class="opt-btn" data-unit="ms" onclick="setUnit('ms', this)">Milliseconds</div>
+                </div>
+                <div id="tsResult" style="font-family: monospace; font-size: 0.9rem; padding: 12px; background: var(--surface2); border-radius: 8px; min-height: 80px;"></div>
+            </div>
+            <div class="panel" style="padding: 24px;">
+                <h3 style="font-size: 1rem; margin-bottom: 16px;">Date to Timestamp</h3>
+                <div class="input-group">
+                    <input type="text" id="dateInput" placeholder="YYYY-MM-DD HH:MM:SS" style="flex: 1;" oninput="dateToTs()">
+                </div>
+                <div style="margin-top: 8px;">
+                    <button class="opt-btn" onclick="document.getElementById('dateInput').value=new Date().toISOString().slice(0,19).replace('T',' '); dateToTs();">Now</button>
+                </div>
+                <div id="dateResult" style="font-family: monospace; font-size: 0.9rem; padding: 12px; background: var(--surface2); border-radius: 8px; min-height: 80px; margin-top: 12px;"></div>
+            </div>
+        </div>
+
+        
+        <div class="promo">
+            <div class="promo-text">
+                <h3>Level up your AI game</h3>
+                <p>100+ battle-tested prompts for business, coding, and content. Copy-paste ready.</p>
+            </div>
+            <a href="https://austinkc91.github.io/prompt-vault/" class="promo-link">Get the Playbook &mdash; $9</a>
+        </div>
+        <div class="email-capture">
+            <h3>Get free text tool updates</h3>
+            <p>New tools added monthly. No spam, just utility.</p>
+            <form class="email-form" action="https://formsubmit.co/clawbot91@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="TextForge Email Signup (Timestamp Converter)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        <div class="promo" style="background: linear-gradient(135deg, #1a2e1a, #1e3a2e); border-color: #166534;">
+            <div class="promo-text">
+                <h3>BAS/HVAC professionals</h3>
+                <p>Complete field reference: control sequences, troubleshooting flowcharts, commissioning checklists.</p>
+            </div>
+            <a href="https://austinkc91.github.io/bas-field-guide/" class="promo-link" style="background: #059669;">Field Guide &mdash; $14</a>
+        </div>
+        <h2 style="font-size:1.1rem; margin-top:40px; margin-bottom:16px;">More Free Tools</h2>
+        <div class="tools-grid">
+            <a href="https://austinkc91.github.io/text-tools/case-converter/" class="tool-card"><h3>Case Converter</h3><p>Convert between 9 text case formats</p></a>
+            <a href="https://austinkc91.github.io/text-tools/word-counter/" class="tool-card"><h3>Word Counter</h3><p>Count words, characters, sentences</p></a>
+            <a href="https://austinkc91.github.io/text-tools/json-formatter/" class="tool-card"><h3>JSON Formatter</h3><p>Format, validate, and minify JSON</p></a>
+            <a href="https://austinkc91.github.io/text-tools/base64-encoder-decoder/" class="tool-card"><h3>Base64 Encoder</h3><p>Encode and decode Base64 text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/url-encoder-decoder/" class="tool-card"><h3>URL Encoder</h3><p>Encode and decode URLs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/slug-generator/" class="tool-card"><h3>Slug Generator</h3><p>Create URL-friendly slugs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/lorem-ipsum-generator/" class="tool-card"><h3>Lorem Ipsum</h3><p>Generate placeholder text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/hash-generator/" class="tool-card"><h3>Hash Generator</h3><p>Calculate SHA-256 and SHA-1 hashes</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-diff/" class="tool-card"><h3>Text Diff</h3><p>Compare two texts side by side</p></a>
+            <a href="https://austinkc91.github.io/text-tools/regex-tester/" class="tool-card"><h3>Regex Tester</h3><p>Test regular expressions</p></a>
+            <a href="https://austinkc91.github.io/text-tools/markdown-preview/" class="tool-card"><h3>Markdown Preview</h3><p>Preview Markdown as formatted text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-cleaner/" class="tool-card"><h3>Text Cleaner</h3><p>Clean up messy text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/color-converter/" class="tool-card"><h3>Color Converter</h3><p>Convert HEX, RGB, HSL colors</p></a>
+            <a href="https://austinkc91.github.io/text-tools/password-generator/" class="tool-card"><h3>Password Generator</h3><p>Generate secure passwords</p></a>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>TextForge &mdash; Built with care. Free forever.</p>
+            <p style="margin-top: 8px;">
+                <a href="https://austinkc91.github.io/prompt-vault/">Prompt Vault</a> &middot;
+                <a href="https://austinkc91.github.io/bas-field-guide/">BAS Field Guide</a> &middot;
+                <a href="https://austinkc91.github.io/text-tools/">All Tools</a>
+            </p>
+        </div>
+    </footer>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Timestamp Converter - TextForge",
+        "description": "Convert Unix timestamps to human-readable dates and vice versa.",
+        "url": "https://austinkc91.github.io/text-tools/timestamp-converter/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+    <script>
+    let unit = 's';
+    function setUnit(u, btn) {
+        unit = u;
+        document.querySelectorAll('[data-unit]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        tsToDate();
+    }
+
+    function tsToDate() {
+        const v = document.getElementById('tsInput').value.trim();
+        if (!v) { document.getElementById('tsResult').textContent = ''; return; }
+        const ts = parseInt(v);
+        if (isNaN(ts)) { document.getElementById('tsResult').textContent = 'Invalid timestamp'; return; }
+        const ms = unit === 'ms' ? ts : ts * 1000;
+        const d = new Date(ms);
+        if (isNaN(d.getTime())) { document.getElementById('tsResult').textContent = 'Invalid timestamp'; return; }
+        document.getElementById('tsResult').innerHTML = [
+            'UTC: ' + d.toUTCString(),
+            'Local: ' + d.toString(),
+            'ISO: ' + d.toISOString(),
+            '',
+            'Relative: ' + timeAgo(d),
+        ].join('<br>');
+    }
+
+    function dateToTs() {
+        const v = document.getElementById('dateInput').value.trim();
+        if (!v) { document.getElementById('dateResult').textContent = ''; return; }
+        const d = new Date(v.includes('T') ? v : v.replace(' ', 'T'));
+        if (isNaN(d.getTime())) { document.getElementById('dateResult').textContent = 'Invalid date format. Use YYYY-MM-DD HH:MM:SS'; return; }
+        const sec = Math.floor(d.getTime() / 1000);
+        document.getElementById('dateResult').innerHTML = [
+            'Seconds: ' + sec,
+            'Milliseconds: ' + d.getTime(),
+            '',
+            'ISO: ' + d.toISOString(),
+        ].join('<br>');
+    }
+
+    function timeAgo(d) {
+        const diff = Date.now() - d.getTime();
+        const abs = Math.abs(diff);
+        const suffix = diff > 0 ? 'ago' : 'from now';
+        if (abs < 60000) return Math.round(abs/1000) + ' seconds ' + suffix;
+        if (abs < 3600000) return Math.round(abs/60000) + ' minutes ' + suffix;
+        if (abs < 86400000) return Math.round(abs/3600000) + ' hours ' + suffix;
+        if (abs < 2592000000) return Math.round(abs/86400000) + ' days ' + suffix;
+        return Math.round(abs/2592000000) + ' months ' + suffix;
+    }
+
+    function updateClock() {
+        const now = Math.floor(Date.now() / 1000);
+        document.getElementById('currentTs').textContent = now;
+        document.getElementById('currentDate').textContent = new Date().toUTCString();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
