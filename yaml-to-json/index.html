@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free YAML to JSON Converter Online - Instant Format Conversion | TextForge</title>
+    <meta name="description" content="Convert YAML to JSON format instantly. Supports nested objects, arrays, and all YAML data types. Free, no signup required.">
+    <meta name="keywords" content="yaml to json, yaml converter, yaml to json online, convert yaml, yaml parser, data format converter">
+    <meta property="og:title" content="Free YAML to JSON Converter Online - Instant Format Conversion">
+    <meta property="og:description" content="Convert YAML to JSON format instantly. Supports nested objects, arrays, and all YAML data types. Free, no signup required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://austinkc91.github.io/text-tools/yaml-to-json/">
+    <link rel="canonical" href="https://austinkc91.github.io/text-tools/yaml-to-json/">
+    <style>
+        :root {
+            --bg: #0f1117; --surface: #1a1d27; --surface2: #242736;
+            --border: #2e3145; --text: #e4e4e7; --muted: #9ca3af;
+            --accent: #6366f1; --accent2: #818cf8; --green: #34d399;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent2); }
+        h1 { font-size: 1.8rem; margin: 32px 0 8px; }
+        .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+        .options-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; align-items: center; }
+        .opt-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+        .opt-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-label { font-size: 0.8rem; color: var(--muted); padding: 0 4px; }
+        .opt-select { padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; outline: none; }
+        .opt-select:focus { border-color: var(--accent); }
+        .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        @media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } }
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+        .panel-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .panel-actions { display: flex; gap: 8px; }
+        textarea { width: 100%; min-height: 320px; padding: 16px; background: transparent; border: none; color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; resize: vertical; outline: none; line-height: 1.7; }
+        textarea::placeholder { color: #4b5068; }
+        .copy-btn { padding: 6px 14px; background: var(--accent); border: none; border-radius: 6px; color: white; font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .copy-btn:hover { background: var(--accent2); }
+        .copy-btn.copied { background: var(--green); }
+        .download-btn { padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .download-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .status-bar { padding: 8px 16px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--surface2); min-height: 36px; }
+        .status-bar.error { color: #f87171; }
+        .status-bar.success { color: var(--green); }
+        .promo { background: linear-gradient(135deg, #1e1b4b, #312e81); border: 1px solid #4338ca; border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .promo-text h3 { font-size: 1rem; margin-bottom: 4px; }
+        .promo-text p { font-size: 0.85rem; color: var(--muted); }
+        .promo-link { padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+        .promo-link:hover { background: var(--accent2); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 32px 0; }
+        .tool-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
+        .tool-card:hover { border-color: var(--accent); }
+        .tool-card h3 { font-size: 0.9rem; margin-bottom: 4px; }
+        .tool-card p { font-size: 0.8rem; color: var(--muted); }
+        footer { padding: 24px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; }
+        footer a { color: var(--accent2); text-decoration: none; }
+        .email-capture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 24px 0; text-align: center; }
+        .email-capture h3 { margin-bottom: 8px; font-size: 1rem; }
+        .email-capture p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+        .email-form { display: flex; gap: 8px; justify-content: center; max-width: 400px; margin: 0 auto; }
+        .email-form input { flex: 1; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; outline: none; }
+        .email-form input:focus { border-color: var(--accent); }
+        .email-form button { padding: 10px 20px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .divider { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+        .divider-line { flex: 1; height: 1px; background: var(--border); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://austinkc91.github.io/text-tools/" class="logo">TextForge</a>
+            <a href="https://austinkc91.github.io/text-tools/" class="back-link">All Tools</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>YAML to JSON Converter</h1>
+        <p class="subtitle">Convert YAML to JSON instantly. Supports nested objects, arrays, quoted strings, and all YAML data types. Free, no signup required.</p>
+
+        <div class="options-bar">
+            <div class="opt-btn active" id="btnPretty" onclick="togglePretty()">Pretty Print: ON</div>
+        </div>
+
+        <div class="workspace">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">YAML Input</span>
+                </div>
+                <textarea id="input" placeholder="Paste your YAML data here...
+
+Example:
+name: John Doe
+age: 30
+active: true
+address:
+  street: 123 Main St
+  city: New York
+tags:
+  - developer
+  - writer
+languages: [Python, JavaScript, Go]"></textarea>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">JSON Output</span>
+                    <div class="panel-actions">
+                        <button class="download-btn" onclick="downloadJSON()">Download .json</button>
+                        <button class="copy-btn" id="copyBtn" onclick="copyOutput()">Copy</button>
+                    </div>
+                </div>
+                <textarea id="output" placeholder="JSON output will appear here..." readonly></textarea>
+                <div class="status-bar" id="statusBar">Paste YAML data to begin</div>
+            </div>
+        </div>
+
+        <div class="promo">
+            <div class="promo-text">
+                <h3>Level up your AI game</h3>
+                <p>100+ battle-tested prompts for business, coding, and content. Copy-paste ready.</p>
+            </div>
+            <a href="https://austinkc91.github.io/prompt-vault/" class="promo-link">Get the Playbook &mdash; $9</a>
+        </div>
+
+        <div class="email-capture">
+            <h3>Get free text tool updates</h3>
+            <p>New tools added monthly. No spam, just utility.</p>
+            <form class="email-form" action="https://formsubmit.co/clawbot91@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="TextForge Email Signup (YAML to JSON)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.1rem; margin-top:40px; margin-bottom:16px;">More Free Tools</h2>
+        <div class="tools-grid">
+            <a href="https://austinkc91.github.io/text-tools/json-formatter/" class="tool-card"><h3>JSON Formatter</h3><p>Format, validate, and minify JSON</p></a>
+            <a href="https://austinkc91.github.io/text-tools/csv-to-json/" class="tool-card"><h3>CSV to JSON</h3><p>Convert CSV data to JSON format</p></a>
+            <a href="https://austinkc91.github.io/text-tools/case-converter/" class="tool-card"><h3>Case Converter</h3><p>Transform text between 9 case formats</p></a>
+            <a href="https://austinkc91.github.io/text-tools/word-counter/" class="tool-card"><h3>Word Counter</h3><p>Count words, characters, sentences</p></a>
+            <a href="https://austinkc91.github.io/text-tools/base64-encoder-decoder/" class="tool-card"><h3>Base64 Encoder/Decoder</h3><p>Encode and decode Base64 text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/url-encoder-decoder/" class="tool-card"><h3>URL Encoder/Decoder</h3><p>Encode and decode URLs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/slug-generator/" class="tool-card"><h3>Slug Generator</h3><p>Create URL-friendly slugs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/hash-generator/" class="tool-card"><h3>Hash Generator</h3><p>Calculate SHA-256 and SHA-1 hashes</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-diff/" class="tool-card"><h3>Text Diff</h3><p>Compare two texts side by side</p></a>
+            <a href="https://austinkc91.github.io/text-tools/regex-tester/" class="tool-card"><h3>Regex Tester</h3><p>Test regular expressions</p></a>
+            <a href="https://austinkc91.github.io/text-tools/markdown-preview/" class="tool-card"><h3>Markdown Preview</h3><p>Preview Markdown as formatted text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-cleaner/" class="tool-card"><h3>Text Cleaner</h3><p>Clean up messy text</p></a>
+        </div>
+
+        <div class="promo" style="background: linear-gradient(135deg, #1a2e1a, #1e3a2e); border-color: #166534;">
+            <div class="promo-text">
+                <h3>BAS/HVAC professionals</h3>
+                <p>Complete field reference: control sequences, troubleshooting flowcharts, commissioning checklists.</p>
+            </div>
+            <a href="https://austinkc91.github.io/bas-field-guide/" class="promo-link" style="background: #059669;">Field Guide &mdash; $14</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>TextForge &mdash; Built with care. Free forever.</p>
+            <p style="margin-top: 8px;">
+                <a href="https://austinkc91.github.io/prompt-vault/">Prompt Vault</a> &middot;
+                <a href="https://austinkc91.github.io/bas-field-guide/">BAS Field Guide</a> &middot;
+                <a href="https://austinkc91.github.io/text-tools/">All Tools</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    const inputEl = document.getElementById('input');
+    const outputEl = document.getElementById('output');
+    const statusBar = document.getElementById('statusBar');
+
+    let prettyPrint = true;
+
+    function togglePretty() {
+        prettyPrint = !prettyPrint;
+        const btn = document.getElementById('btnPretty');
+        btn.textContent = prettyPrint ? 'Pretty Print: ON' : 'Pretty Print: OFF';
+        btn.classList.toggle('active', prettyPrint);
+        runConvert();
+    }
+
+    // ── Lightweight YAML parser ──────────────────────────────────────────
+    function parseYAML(text) {
+        const lines = text.replace(/\r\n/g, '\n').split('\n');
+        // Remove trailing empty lines and full-line comments at root
+        const cleaned = [];
+        for (const line of lines) {
+            // Keep blank lines for structure, skip pure comment lines
+            if (/^\s*#/.test(line)) continue;
+            cleaned.push(line);
+        }
+        const ctx = { lines: cleaned, pos: 0 };
+        const result = parseNode(ctx, 0);
+        return result;
+    }
+
+    function peekIndent(ctx) {
+        if (ctx.pos >= ctx.lines.length) return -1;
+        const line = ctx.lines[ctx.pos];
+        if (line.trim() === '') return -1;
+        return line.match(/^(\s*)/)[1].length;
+    }
+
+    function parseNode(ctx, indent) {
+        skipBlanks(ctx);
+        if (ctx.pos >= ctx.lines.length) return null;
+
+        const line = ctx.lines[ctx.pos];
+        const trimmed = line.trim();
+
+        // Check if current level is a sequence (lines starting with "- ")
+        const lineIndent = peekIndent(ctx);
+        if (lineIndent < indent) return null;
+
+        if (/^-\s/.test(trimmed) || trimmed === '-') {
+            return parseSequence(ctx, lineIndent);
+        }
+
+        // Otherwise it's a mapping
+        if (trimmed.includes(':')) {
+            return parseMapping(ctx, lineIndent);
+        }
+
+        // Single scalar value
+        ctx.pos++;
+        return parseScalar(trimmed);
+    }
+
+    function skipBlanks(ctx) {
+        while (ctx.pos < ctx.lines.length && ctx.lines[ctx.pos].trim() === '') {
+            ctx.pos++;
+        }
+    }
+
+    function parseMapping(ctx, indent) {
+        const obj = {};
+        while (ctx.pos < ctx.lines.length) {
+            skipBlanks(ctx);
+            if (ctx.pos >= ctx.lines.length) break;
+            const ci = peekIndent(ctx);
+            if (ci < 0 || ci !== indent) break;
+
+            const line = ctx.lines[ctx.pos];
+            const trimmed = line.trim();
+
+            // Must be a key: value line
+            const colonMatch = trimmed.match(/^((?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^:])*):\s*(.*)/);
+            if (!colonMatch) break;
+
+            let key = colonMatch[1].trim();
+            // Unquote key
+            key = unquote(key);
+            const rest = colonMatch[2].trim();
+            ctx.pos++;
+
+            if (rest === '' || rest === '|' || rest === '>') {
+                // Check for multiline string indicators
+                if (rest === '|') {
+                    obj[key] = parseBlockScalar(ctx, indent, false);
+                } else if (rest === '>') {
+                    obj[key] = parseBlockScalar(ctx, indent, true);
+                } else {
+                    // Value is on nested lines
+                    skipBlanks(ctx);
+                    const nextIndent = peekIndent(ctx);
+                    if (nextIndent > indent) {
+                        obj[key] = parseNode(ctx, nextIndent);
+                    } else {
+                        obj[key] = null;
+                    }
+                }
+            } else {
+                // Inline value
+                obj[key] = parseInlineValue(rest);
+            }
+        }
+        return obj;
+    }
+
+    function parseSequence(ctx, indent) {
+        const arr = [];
+        while (ctx.pos < ctx.lines.length) {
+            skipBlanks(ctx);
+            if (ctx.pos >= ctx.lines.length) break;
+            const ci = peekIndent(ctx);
+            if (ci < 0 || ci !== indent) break;
+
+            const line = ctx.lines[ctx.pos];
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('-')) break;
+
+            // Get content after the dash
+            const afterDash = trimmed.slice(1).trim();
+            ctx.pos++;
+
+            if (afterDash === '') {
+                // Nested block under dash
+                skipBlanks(ctx);
+                const nextIndent = peekIndent(ctx);
+                if (nextIndent > indent) {
+                    arr.push(parseNode(ctx, nextIndent));
+                } else {
+                    arr.push(null);
+                }
+            } else if (afterDash.includes(':') && !afterDash.startsWith('{') && !afterDash.startsWith('[') && !afterDash.startsWith('"') && !afterDash.startsWith("'")) {
+                // Inline mapping item: "- key: value" — could be start of a mapping block
+                // We need to parse this as a mapping where the first key:value is from afterDash
+                // and subsequent lines at indent+2 continue the mapping
+                const mappingObj = {};
+                const cm = afterDash.match(/^((?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^:])*):\s*(.*)/);
+                if (cm) {
+                    let k = unquote(cm[1].trim());
+                    const v = cm[2].trim();
+                    if (v === '' || v === '|' || v === '>') {
+                        if (v === '|') {
+                            mappingObj[k] = parseBlockScalar(ctx, indent, false);
+                        } else if (v === '>') {
+                            mappingObj[k] = parseBlockScalar(ctx, indent, true);
+                        } else {
+                            skipBlanks(ctx);
+                            const ni = peekIndent(ctx);
+                            if (ni > indent) {
+                                mappingObj[k] = parseNode(ctx, ni);
+                            } else {
+                                mappingObj[k] = null;
+                            }
+                        }
+                    } else {
+                        mappingObj[k] = parseInlineValue(v);
+                    }
+                    // Continue reading mapping keys at the same sub-indent
+                    // The sub-indent for continuation is indent + 2 (after "- ")
+                    const subIndent = indent + 2;
+                    while (ctx.pos < ctx.lines.length) {
+                        skipBlanks(ctx);
+                        const si = peekIndent(ctx);
+                        if (si !== subIndent) break;
+                        const subLine = ctx.lines[ctx.pos].trim();
+                        const sm = subLine.match(/^((?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^:])*):\s*(.*)/);
+                        if (!sm) break;
+                        let sk = unquote(sm[1].trim());
+                        const sv = sm[2].trim();
+                        ctx.pos++;
+                        if (sv === '' || sv === '|' || sv === '>') {
+                            if (sv === '|') {
+                                mappingObj[sk] = parseBlockScalar(ctx, subIndent, false);
+                            } else if (sv === '>') {
+                                mappingObj[sk] = parseBlockScalar(ctx, subIndent, true);
+                            } else {
+                                skipBlanks(ctx);
+                                const ni = peekIndent(ctx);
+                                if (ni > subIndent) {
+                                    mappingObj[sk] = parseNode(ctx, ni);
+                                } else {
+                                    mappingObj[sk] = null;
+                                }
+                            }
+                        } else {
+                            mappingObj[sk] = parseInlineValue(sv);
+                        }
+                    }
+                    arr.push(mappingObj);
+                } else {
+                    arr.push(parseScalar(afterDash));
+                }
+            } else {
+                arr.push(parseInlineValue(afterDash));
+            }
+        }
+        return arr;
+    }
+
+    function parseBlockScalar(ctx, parentIndent, fold) {
+        const lines = [];
+        // Determine block indent from first non-empty line
+        skipBlanks(ctx);
+        if (ctx.pos >= ctx.lines.length) return '';
+        const blockIndent = peekIndent(ctx);
+        if (blockIndent <= parentIndent) return '';
+
+        while (ctx.pos < ctx.lines.length) {
+            const line = ctx.lines[ctx.pos];
+            if (line.trim() === '') {
+                lines.push('');
+                ctx.pos++;
+                continue;
+            }
+            const ci = line.match(/^(\s*)/)[1].length;
+            if (ci < blockIndent) break;
+            lines.push(line.slice(blockIndent));
+            ctx.pos++;
+        }
+
+        // Remove trailing empty lines
+        while (lines.length > 0 && lines[lines.length - 1] === '') lines.pop();
+
+        if (fold) {
+            return lines.join(' ').replace(/\s+/g, ' ').trim();
+        }
+        return lines.join('\n');
+    }
+
+    function parseInlineValue(str) {
+        str = str.trim();
+        // Strip inline comments (but not inside quotes)
+        if (!str.startsWith('"') && !str.startsWith("'") && !str.startsWith('[') && !str.startsWith('{')) {
+            const commentIdx = str.indexOf(' #');
+            if (commentIdx > 0) str = str.slice(0, commentIdx).trim();
+        }
+
+        if (str.startsWith('[')) return parseInlineArray(str);
+        if (str.startsWith('{')) return parseInlineObject(str);
+        return parseScalar(str);
+    }
+
+    function parseInlineArray(str) {
+        str = str.trim();
+        if (!str.startsWith('[') || !str.endsWith(']')) throw new Error('Invalid inline array: ' + str);
+        const inner = str.slice(1, -1).trim();
+        if (inner === '') return [];
+        return splitFlowItems(inner).map(s => parseInlineValue(s.trim()));
+    }
+
+    function parseInlineObject(str) {
+        str = str.trim();
+        if (!str.startsWith('{') || !str.endsWith('}')) throw new Error('Invalid inline object: ' + str);
+        const inner = str.slice(1, -1).trim();
+        if (inner === '') return {};
+        const obj = {};
+        const items = splitFlowItems(inner);
+        for (const item of items) {
+            const m = item.match(/^\s*((?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^:])*)\s*:\s*(.*)/);
+            if (m) {
+                obj[unquote(m[1].trim())] = parseInlineValue(m[2].trim());
+            }
+        }
+        return obj;
+    }
+
+    function splitFlowItems(str) {
+        const items = [];
+        let depth = 0;
+        let current = '';
+        let inSingle = false, inDouble = false;
+        for (let i = 0; i < str.length; i++) {
+            const ch = str[i];
+            if (ch === '"' && !inSingle) inDouble = !inDouble;
+            else if (ch === "'" && !inDouble) inSingle = !inSingle;
+            else if (!inSingle && !inDouble) {
+                if (ch === '[' || ch === '{') depth++;
+                else if (ch === ']' || ch === '}') depth--;
+                else if (ch === ',' && depth === 0) {
+                    items.push(current);
+                    current = '';
+                    continue;
+                }
+            }
+            current += ch;
+        }
+        if (current.trim()) items.push(current);
+        return items;
+    }
+
+    function unquote(str) {
+        if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
+            return str.slice(1, -1).replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\').replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+        }
+        return str;
+    }
+
+    function parseScalar(str) {
+        str = str.trim();
+        if (str === '' || str === 'null' || str === 'Null' || str === 'NULL' || str === '~') return null;
+        if (str === 'true' || str === 'True' || str === 'TRUE') return true;
+        if (str === 'false' || str === 'False' || str === 'FALSE') return false;
+
+        // Quoted string
+        if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
+            return unquote(str);
+        }
+
+        // Number
+        if (/^-?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/.test(str)) {
+            return Number(str);
+        }
+        // Hex
+        if (/^0x[0-9a-fA-F]+$/.test(str)) return parseInt(str, 16);
+        // Octal
+        if (/^0o[0-7]+$/.test(str)) return parseInt(str.slice(2), 8);
+
+        // Infinity / NaN
+        if (str === '.inf' || str === '.Inf' || str === '.INF') return Infinity;
+        if (str === '-.inf' || str === '-.Inf' || str === '-.INF') return -Infinity;
+        if (str === '.nan' || str === '.NaN' || str === '.NAN') return NaN;
+
+        return str;
+    }
+
+    // ── Conversion ───────────────────────────────────────────────────────
+    function runConvert() {
+        const raw = inputEl.value.trim();
+        if (!raw) {
+            outputEl.value = '';
+            setStatus('Paste YAML data to begin', '');
+            return;
+        }
+
+        try {
+            // Handle multi-document YAML (---) by taking first document
+            let yamlText = raw;
+            if (yamlText.startsWith('---')) {
+                yamlText = yamlText.replace(/^---\s*\n?/, '');
+                const endDoc = yamlText.indexOf('\n---');
+                if (endDoc !== -1) yamlText = yamlText.slice(0, endDoc);
+                const endDots = yamlText.indexOf('\n...');
+                if (endDots !== -1) yamlText = yamlText.slice(0, endDots);
+            }
+
+            const result = parseYAML(yamlText);
+            const json = prettyPrint
+                ? JSON.stringify(result, null, 2)
+                : JSON.stringify(result);
+
+            outputEl.value = json;
+
+            const keyCount = (result && typeof result === 'object')
+                ? (Array.isArray(result) ? result.length + ' items' : Object.keys(result).length + ' keys')
+                : 'scalar value';
+            setStatus('Converted successfully (' + keyCount + ')', 'success');
+
+        } catch (err) {
+            outputEl.value = '';
+            setStatus('Parse error: ' + err.message, 'error');
+        }
+    }
+
+    function setStatus(msg, type) {
+        statusBar.textContent = msg;
+        statusBar.className = 'status-bar' + (type ? ' ' + type : '');
+    }
+
+    function copyOutput() {
+        const btn = document.getElementById('copyBtn');
+        if (!outputEl.value) return;
+        navigator.clipboard.writeText(outputEl.value).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        });
+    }
+
+    function downloadJSON() {
+        if (!outputEl.value) return;
+        const blob = new Blob([outputEl.value], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'converted.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    inputEl.addEventListener('input', runConvert);
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "YAML to JSON Converter - TextForge",
+        "description": "Convert YAML to JSON format instantly. Supports nested objects, arrays, and all YAML data types. Free, no signup required.",
+        "url": "https://austinkc91.github.io/text-tools/yaml-to-json/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+</body>
+</html>

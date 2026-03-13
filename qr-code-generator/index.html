@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free QR Code Generator Online - Create QR Codes Instantly | TextForge</title>
+    <meta name="description" content="Generate QR codes instantly from any text or URL. Customize size and error correction. Download as PNG. Free, no signup required.">
+    <meta name="keywords" content="qr code generator, qr code maker, create qr code, qr code online, free qr code, text to qr code, url to qr code">
+    <meta property="og:title" content="Free QR Code Generator Online - Create QR Codes Instantly">
+    <meta property="og:description" content="Generate QR codes instantly from any text or URL. Customize size and error correction. Download as PNG. Free, no signup required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://austinkc91.github.io/text-tools/qr-code-generator/">
+    <link rel="canonical" href="https://austinkc91.github.io/text-tools/qr-code-generator/">
+    <style>
+        :root {
+            --bg: #0f1117; --surface: #1a1d27; --surface2: #242736;
+            --border: #2e3145; --text: #e4e4e7; --muted: #9ca3af;
+            --accent: #6366f1; --accent2: #818cf8; --green: #34d399;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent2); }
+        h1 { font-size: 1.8rem; margin: 32px 0 8px; }
+        .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+        .options-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; align-items: center; }
+        .opt-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+        .opt-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-label { font-size: 0.8rem; color: var(--muted); padding: 0 4px; }
+        .opt-select { padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; outline: none; }
+        .opt-select:focus { border-color: var(--accent); }
+        .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        @media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } }
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+        .panel-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .panel-actions { display: flex; gap: 8px; }
+        textarea { width: 100%; min-height: 320px; padding: 16px; background: transparent; border: none; color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; resize: vertical; outline: none; line-height: 1.7; }
+        textarea::placeholder { color: #4b5068; }
+        .copy-btn { padding: 6px 14px; background: var(--accent); border: none; border-radius: 6px; color: white; font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .copy-btn:hover { background: var(--accent2); }
+        .copy-btn.copied { background: var(--green); }
+        .download-btn { padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .download-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .status-bar { padding: 8px 16px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--surface2); min-height: 36px; }
+        .status-bar.error { color: #f87171; }
+        .status-bar.success { color: var(--green); }
+        .promo { background: linear-gradient(135deg, #1e1b4b, #312e81); border: 1px solid #4338ca; border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .promo-text h3 { font-size: 1rem; margin-bottom: 4px; }
+        .promo-text p { font-size: 0.85rem; color: var(--muted); }
+        .promo-link { padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+        .promo-link:hover { background: var(--accent2); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 32px 0; }
+        .tool-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
+        .tool-card:hover { border-color: var(--accent); }
+        .tool-card h3 { font-size: 0.9rem; margin-bottom: 4px; }
+        .tool-card p { font-size: 0.8rem; color: var(--muted); }
+        footer { padding: 24px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; }
+        footer a { color: var(--accent2); text-decoration: none; }
+        .email-capture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 24px 0; text-align: center; }
+        .email-capture h3 { margin-bottom: 8px; font-size: 1rem; }
+        .email-capture p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+        .email-form { display: flex; gap: 8px; justify-content: center; max-width: 400px; margin: 0 auto; }
+        .email-form input { flex: 1; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; outline: none; }
+        .email-form input:focus { border-color: var(--accent); }
+        .email-form button { padding: 10px 20px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .divider { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+        .divider-line { flex: 1; height: 1px; background: var(--border); }
+        .qr-display { display: flex; align-items: center; justify-content: center; min-height: 320px; padding: 24px; background: transparent; }
+        .qr-display canvas { border-radius: 8px; }
+        .qr-placeholder { color: #4b5068; font-size: 0.9rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://austinkc91.github.io/text-tools/" class="logo">TextForge</a>
+            <a href="https://austinkc91.github.io/text-tools/" class="back-link">All Tools</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>QR Code Generator</h1>
+        <p class="subtitle">Generate QR codes instantly from any text or URL. Customize size and error correction level. Download as PNG. Free, no signup required.</p>
+
+        <div class="options-bar">
+            <span class="opt-label">Size:</span>
+            <div class="opt-btn" id="btnSmall" onclick="setSize('small')">Small</div>
+            <div class="opt-btn active" id="btnMedium" onclick="setSize('medium')">Medium</div>
+            <div class="opt-btn" id="btnLarge" onclick="setSize('large')">Large</div>
+            <span class="opt-label" style="margin-left:8px;">Error Correction:</span>
+            <select class="opt-select" id="ecSelect" onchange="generate()">
+                <option value="L">Low (L)</option>
+                <option value="M" selected>Medium (M)</option>
+                <option value="Q">Quartile (Q)</option>
+                <option value="H">High (H)</option>
+            </select>
+        </div>
+
+        <div class="workspace">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">Text / URL Input</span>
+                </div>
+                <textarea id="input" placeholder="Enter text or URL to generate a QR code...
+
+Examples:
+https://example.com
+Hello, World!
+WIFI:T:WPA;S:MyNetwork;P:password123;;"></textarea>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">QR Code Output</span>
+                    <div class="panel-actions">
+                        <button class="download-btn" onclick="downloadPNG()">Download PNG</button>
+                        <button class="copy-btn" id="copyBtn" onclick="copyImage()">Copy</button>
+                    </div>
+                </div>
+                <div class="qr-display" id="qrDisplay">
+                    <div class="qr-placeholder">Enter text to generate a QR code</div>
+                </div>
+                <div class="status-bar" id="statusBar">Enter text or URL to begin</div>
+            </div>
+        </div>
+
+        <div class="promo">
+            <div class="promo-text">
+                <h3>Level up your AI game</h3>
+                <p>100+ battle-tested prompts for business, coding, and content. Copy-paste ready.</p>
+            </div>
+            <a href="https://austinkc91.github.io/prompt-vault/" class="promo-link">Get the Playbook &mdash; $9</a>
+        </div>
+
+        <div class="email-capture">
+            <h3>Get free text tool updates</h3>
+            <p>New tools added monthly. No spam, just utility.</p>
+            <form class="email-form" action="https://formsubmit.co/clawbot91@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="TextForge Email Signup (QR Code Generator)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.1rem; margin-top:40px; margin-bottom:16px;">More Free Tools</h2>
+        <div class="tools-grid">
+            <a href="https://austinkc91.github.io/text-tools/json-formatter/" class="tool-card"><h3>JSON Formatter</h3><p>Format, validate, and minify JSON</p></a>
+            <a href="https://austinkc91.github.io/text-tools/csv-to-json/" class="tool-card"><h3>CSV to JSON</h3><p>Convert CSV data to JSON format</p></a>
+            <a href="https://austinkc91.github.io/text-tools/case-converter/" class="tool-card"><h3>Case Converter</h3><p>Transform text between 9 case formats</p></a>
+            <a href="https://austinkc91.github.io/text-tools/word-counter/" class="tool-card"><h3>Word Counter</h3><p>Count words, characters, sentences</p></a>
+            <a href="https://austinkc91.github.io/text-tools/base64-encoder-decoder/" class="tool-card"><h3>Base64 Encoder/Decoder</h3><p>Encode and decode Base64 text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/url-encoder-decoder/" class="tool-card"><h3>URL Encoder/Decoder</h3><p>Encode and decode URLs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/slug-generator/" class="tool-card"><h3>Slug Generator</h3><p>Create URL-friendly slugs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/hash-generator/" class="tool-card"><h3>Hash Generator</h3><p>Calculate SHA-256 and SHA-1 hashes</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-diff/" class="tool-card"><h3>Text Diff</h3><p>Compare two texts side by side</p></a>
+            <a href="https://austinkc91.github.io/text-tools/regex-tester/" class="tool-card"><h3>Regex Tester</h3><p>Test regular expressions</p></a>
+            <a href="https://austinkc91.github.io/text-tools/markdown-preview/" class="tool-card"><h3>Markdown Preview</h3><p>Preview Markdown as formatted text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-cleaner/" class="tool-card"><h3>Text Cleaner</h3><p>Clean up messy text</p></a>
+        </div>
+
+        <div class="promo" style="background: linear-gradient(135deg, #1a2e1a, #1e3a2e); border-color: #166534;">
+            <div class="promo-text">
+                <h3>BAS/HVAC professionals</h3>
+                <p>Complete field reference: control sequences, troubleshooting flowcharts, commissioning checklists.</p>
+            </div>
+            <a href="https://austinkc91.github.io/bas-field-guide/" class="promo-link" style="background: #059669;">Field Guide &mdash; $14</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>TextForge &mdash; Built with care. Free forever.</p>
+            <p style="margin-top: 8px;">
+                <a href="https://austinkc91.github.io/prompt-vault/">Prompt Vault</a> &middot;
+                <a href="https://austinkc91.github.io/bas-field-guide/">BAS Field Guide</a> &middot;
+                <a href="https://austinkc91.github.io/text-tools/">All Tools</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+    const inputEl = document.getElementById('input');
+    const qrDisplay = document.getElementById('qrDisplay');
+    const statusBar = document.getElementById('statusBar');
+
+    const EC_MAP = { 'L': 1, 'M': 0, 'Q': 3, 'H': 2 };
+    const SIZE_MAP = { small: 4, medium: 6, large: 10 };
+    let currentSize = 'medium';
+    let currentCanvas = null;
+
+    function setSize(size) {
+        currentSize = size;
+        document.getElementById('btnSmall').classList.toggle('active', size === 'small');
+        document.getElementById('btnMedium').classList.toggle('active', size === 'medium');
+        document.getElementById('btnLarge').classList.toggle('active', size === 'large');
+        generate();
+    }
+
+    function generate() {
+        const text = inputEl.value;
+        if (!text) {
+            qrDisplay.innerHTML = '<div class="qr-placeholder">Enter text to generate a QR code</div>';
+            currentCanvas = null;
+            setStatus('Enter text or URL to begin', '');
+            return;
+        }
+
+        try {
+            const ecLevel = document.getElementById('ecSelect').value;
+            const typeNumber = 0; // auto-detect
+            const qr = qrcode(typeNumber, EC_MAP[ecLevel] === undefined ? 0 : ['L','M','Q','H'].indexOf(ecLevel));
+            qr.addData(text);
+            qr.make();
+
+            const moduleCount = qr.getModuleCount();
+            const cellSize = SIZE_MAP[currentSize];
+            const margin = cellSize * 2;
+            const canvasSize = moduleCount * cellSize + margin * 2;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = canvasSize;
+            canvas.height = canvasSize;
+            const ctx = canvas.getContext('2d');
+
+            // White background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+            // Draw modules
+            ctx.fillStyle = '#000000';
+            for (let row = 0; row < moduleCount; row++) {
+                for (let col = 0; col < moduleCount; col++) {
+                    if (qr.isDark(row, col)) {
+                        ctx.fillRect(
+                            margin + col * cellSize,
+                            margin + row * cellSize,
+                            cellSize,
+                            cellSize
+                        );
+                    }
+                }
+            }
+
+            qrDisplay.innerHTML = '';
+            qrDisplay.appendChild(canvas);
+            currentCanvas = canvas;
+
+            const pixels = canvasSize + 'x' + canvasSize;
+            setStatus('QR code generated: ' + moduleCount + 'x' + moduleCount + ' modules, ' + pixels + ' px, EC level ' + ecLevel + ', ' + text.length + ' chars', 'success');
+        } catch (err) {
+            qrDisplay.innerHTML = '<div class="qr-placeholder" style="color: #f87171;">Error: ' + err.message + '</div>';
+            currentCanvas = null;
+            setStatus('Generation error: ' + err.message, 'error');
+        }
+    }
+
+    function setStatus(msg, type) {
+        statusBar.textContent = msg;
+        statusBar.className = 'status-bar' + (type ? ' ' + type : '');
+    }
+
+    function downloadPNG() {
+        if (!currentCanvas) return;
+        const link = document.createElement('a');
+        link.download = 'qrcode.png';
+        link.href = currentCanvas.toDataURL('image/png');
+        link.click();
+    }
+
+    function copyImage() {
+        if (!currentCanvas) return;
+        const btn = document.getElementById('copyBtn');
+        currentCanvas.toBlob(function(blob) {
+            if (!blob) return;
+            const item = new ClipboardItem({ 'image/png': blob });
+            navigator.clipboard.write([item]).then(function() {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+            }).catch(function() {
+                // Fallback: copy data URL as text
+                navigator.clipboard.writeText(currentCanvas.toDataURL('image/png')).then(function() {
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+                });
+            });
+        }, 'image/png');
+    }
+
+    let debounceTimer;
+    inputEl.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(generate, 150);
+    });
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "QR Code Generator - TextForge",
+        "description": "Generate QR codes instantly from any text or URL. Customize size and error correction. Download as PNG. Free, no signup required.",
+        "url": "https://austinkc91.github.io/text-tools/qr-code-generator/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+</body>
+</html>

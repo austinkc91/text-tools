@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Cron Expression Parser & Explainer Online | TextForge</title>
+    <meta name="description" content="Parse and explain cron expressions in plain English. See next scheduled run times. Supports standard 5-field cron syntax. Free, no signup required.">
+    <meta name="keywords" content="cron parser, cron expression, cron explainer, crontab guru, cron schedule, cron syntax, cron validator">
+    <meta property="og:title" content="Free Cron Expression Parser & Explainer Online | TextForge">
+    <meta property="og:description" content="Parse and explain cron expressions in plain English. See next scheduled run times. Supports standard 5-field cron syntax. Free, no signup required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://austinkc91.github.io/text-tools/cron-parser/">
+    <link rel="canonical" href="https://austinkc91.github.io/text-tools/cron-parser/">
+    <style>
+        :root {
+            --bg: #0f1117; --surface: #1a1d27; --surface2: #242736;
+            --border: #2e3145; --text: #e4e4e7; --muted: #9ca3af;
+            --accent: #6366f1; --accent2: #818cf8; --green: #34d399;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent2); }
+        h1 { font-size: 1.8rem; margin: 32px 0 8px; }
+        .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+        .options-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; align-items: center; }
+        .opt-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+        .opt-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-label { font-size: 0.8rem; color: var(--muted); padding: 0 4px; }
+        .opt-select { padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; outline: none; }
+        .opt-select:focus { border-color: var(--accent); }
+        .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        @media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } }
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+        .panel-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .panel-actions { display: flex; gap: 8px; }
+        .cron-input { width: 100%; padding: 20px 16px; background: transparent; border: none; color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.4rem; text-align: center; outline: none; letter-spacing: 0.1em; }
+        .cron-input::placeholder { color: #4b5068; font-size: 1rem; letter-spacing: normal; }
+        .field-labels { display: flex; justify-content: center; gap: 24px; padding: 0 16px 12px; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .description-box { padding: 16px; min-height: 60px; font-size: 1rem; line-height: 1.6; color: var(--text); }
+        .description-box .human { font-size: 1.05rem; font-weight: 500; }
+        .schedule-list { padding: 0 16px 16px; list-style: none; }
+        .schedule-list li { padding: 6px 0; font-size: 0.85rem; color: var(--muted); font-family: 'SF Mono', 'Fira Code', monospace; border-bottom: 1px solid var(--border); }
+        .schedule-list li:last-child { border-bottom: none; }
+        .schedule-list li .run-num { color: var(--accent2); margin-right: 8px; font-size: 0.75rem; }
+        textarea { width: 100%; min-height: 320px; padding: 16px; background: transparent; border: none; color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; resize: vertical; outline: none; line-height: 1.7; }
+        textarea::placeholder { color: #4b5068; }
+        .copy-btn { padding: 6px 14px; background: var(--accent); border: none; border-radius: 6px; color: white; font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .copy-btn:hover { background: var(--accent2); }
+        .copy-btn.copied { background: var(--green); }
+        .download-btn { padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .download-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .status-bar { padding: 8px 16px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--surface2); min-height: 36px; }
+        .status-bar.error { color: #f87171; }
+        .status-bar.success { color: var(--green); }
+        .promo { background: linear-gradient(135deg, #1e1b4b, #312e81); border: 1px solid #4338ca; border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .promo-text h3 { font-size: 1rem; margin-bottom: 4px; }
+        .promo-text p { font-size: 0.85rem; color: var(--muted); }
+        .promo-link { padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+        .promo-link:hover { background: var(--accent2); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 32px 0; }
+        .tool-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
+        .tool-card:hover { border-color: var(--accent); }
+        .tool-card h3 { font-size: 0.9rem; margin-bottom: 4px; }
+        .tool-card p { font-size: 0.8rem; color: var(--muted); }
+        footer { padding: 24px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; }
+        footer a { color: var(--accent2); text-decoration: none; }
+        .email-capture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 24px 0; text-align: center; }
+        .email-capture h3 { margin-bottom: 8px; font-size: 1rem; }
+        .email-capture p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+        .email-form { display: flex; gap: 8px; justify-content: center; max-width: 400px; margin: 0 auto; }
+        .email-form input { flex: 1; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; outline: none; }
+        .email-form input:focus { border-color: var(--accent); }
+        .email-form button { padding: 10px 20px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .divider { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+        .divider-line { flex: 1; height: 1px; background: var(--border); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://austinkc91.github.io/text-tools/" class="logo">TextForge</a>
+            <a href="https://austinkc91.github.io/text-tools/" class="back-link">All Tools</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Cron Expression Parser</h1>
+        <p class="subtitle">Parse and explain cron expressions in plain English. See the next 10 scheduled run times. Supports standard 5-field cron syntax and common shortcuts. Free, no signup required.</p>
+
+        <div class="options-bar">
+            <span class="opt-label">Presets:</span>
+            <div class="opt-btn" onclick="setPreset('* * * * *')">Every Minute</div>
+            <div class="opt-btn" onclick="setPreset('0 * * * *')">Every Hour</div>
+            <div class="opt-btn" onclick="setPreset('0 0 * * *')">Daily Midnight</div>
+            <div class="opt-btn" onclick="setPreset('0 9 * * 1')">Mon 9 AM</div>
+            <div class="opt-btn" onclick="setPreset('0 0 1 * *')">1st of Month</div>
+            <div class="opt-btn" onclick="setPreset('*/5 * * * *')">Every 5 Min</div>
+            <div class="opt-btn" onclick="setPreset('0 9-17 * * 1-5')">Business Hours</div>
+            <div class="opt-btn" onclick="setPreset('0 0 * * 0')">Weekly Sunday</div>
+        </div>
+
+        <div class="workspace">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">Cron Expression</span>
+                </div>
+                <input type="text" class="cron-input" id="cronInput" placeholder="* * * * *" value="0 9 * * 1-5" spellcheck="false" autocomplete="off">
+                <div class="field-labels">
+                    <span>Minute</span>
+                    <span>Hour</span>
+                    <span>Day</span>
+                    <span>Month</span>
+                    <span>Weekday</span>
+                </div>
+                <div class="status-bar" id="statusBar">Enter a cron expression to parse</div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">Human-Readable</span>
+                    <div class="panel-actions">
+                        <button class="copy-btn" id="copyBtn" onclick="copyDescription()">Copy</button>
+                    </div>
+                </div>
+                <div class="description-box" id="descriptionBox">
+                    <div class="human" id="humanDesc"></div>
+                </div>
+                <div class="panel-header" style="border-top: 1px solid var(--border);">
+                    <span class="panel-title">Next 10 Runs</span>
+                </div>
+                <ol class="schedule-list" id="scheduleList"></ol>
+            </div>
+        </div>
+
+        <div class="promo">
+            <div class="promo-text">
+                <h3>Level up your AI game</h3>
+                <p>100+ battle-tested prompts for business, coding, and content. Copy-paste ready.</p>
+            </div>
+            <a href="https://austinkc91.github.io/prompt-vault/" class="promo-link">Get the Playbook &mdash; $9</a>
+        </div>
+
+        <div class="email-capture">
+            <h3>Get free text tool updates</h3>
+            <p>New tools added monthly. No spam, just utility.</p>
+            <form class="email-form" action="https://formsubmit.co/clawbot91@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="TextForge Email Signup (Cron Parser)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.1rem; margin-top:40px; margin-bottom:16px;">More Free Tools</h2>
+        <div class="tools-grid">
+            <a href="https://austinkc91.github.io/text-tools/json-formatter/" class="tool-card"><h3>JSON Formatter</h3><p>Format, validate, and minify JSON</p></a>
+            <a href="https://austinkc91.github.io/text-tools/csv-to-json/" class="tool-card"><h3>CSV to JSON</h3><p>Convert CSV data to JSON format</p></a>
+            <a href="https://austinkc91.github.io/text-tools/case-converter/" class="tool-card"><h3>Case Converter</h3><p>Transform text between 9 case formats</p></a>
+            <a href="https://austinkc91.github.io/text-tools/word-counter/" class="tool-card"><h3>Word Counter</h3><p>Count words, characters, sentences</p></a>
+            <a href="https://austinkc91.github.io/text-tools/base64-encoder-decoder/" class="tool-card"><h3>Base64 Encoder/Decoder</h3><p>Encode and decode Base64 text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/url-encoder-decoder/" class="tool-card"><h3>URL Encoder/Decoder</h3><p>Encode and decode URLs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/slug-generator/" class="tool-card"><h3>Slug Generator</h3><p>Create URL-friendly slugs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/hash-generator/" class="tool-card"><h3>Hash Generator</h3><p>Calculate SHA-256 and SHA-1 hashes</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-diff/" class="tool-card"><h3>Text Diff</h3><p>Compare two texts side by side</p></a>
+            <a href="https://austinkc91.github.io/text-tools/regex-tester/" class="tool-card"><h3>Regex Tester</h3><p>Test regular expressions</p></a>
+            <a href="https://austinkc91.github.io/text-tools/markdown-preview/" class="tool-card"><h3>Markdown Preview</h3><p>Preview Markdown as formatted text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-cleaner/" class="tool-card"><h3>Text Cleaner</h3><p>Clean up messy text</p></a>
+        </div>
+
+        <div class="promo" style="background: linear-gradient(135deg, #1a2e1a, #1e3a2e); border-color: #166534;">
+            <div class="promo-text">
+                <h3>BAS/HVAC professionals</h3>
+                <p>Complete field reference: control sequences, troubleshooting flowcharts, commissioning checklists.</p>
+            </div>
+            <a href="https://austinkc91.github.io/bas-field-guide/" class="promo-link" style="background: #059669;">Field Guide &mdash; $14</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>TextForge &mdash; Built with care. Free forever.</p>
+            <p style="margin-top: 8px;">
+                <a href="https://austinkc91.github.io/prompt-vault/">Prompt Vault</a> &middot;
+                <a href="https://austinkc91.github.io/bas-field-guide/">BAS Field Guide</a> &middot;
+                <a href="https://austinkc91.github.io/text-tools/">All Tools</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    const cronInput = document.getElementById('cronInput');
+    const statusBar = document.getElementById('statusBar');
+    const humanDesc = document.getElementById('humanDesc');
+    const scheduleList = document.getElementById('scheduleList');
+
+    const SHORTCUTS = {
+        '@yearly':  '0 0 1 1 *',
+        '@annually':'0 0 1 1 *',
+        '@monthly': '0 0 1 * *',
+        '@weekly':  '0 0 * * 0',
+        '@daily':   '0 0 * * *',
+        '@midnight':'0 0 * * *',
+        '@hourly':  '0 * * * *',
+    };
+
+    const MONTH_NAMES = ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+    const DOW_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const DOW_MAP = { sun:0, mon:1, tue:2, wed:3, thu:4, fri:5, sat:6 };
+    const MONTH_MAP = { jan:1, feb:2, mar:3, apr:4, may:5, jun:6, jul:7, aug:8, sep:9, oct:10, nov:11, dec:12 };
+
+    function setPreset(expr) {
+        cronInput.value = expr;
+        parseCron();
+    }
+
+    function setStatus(msg, type) {
+        statusBar.textContent = msg;
+        statusBar.className = 'status-bar' + (type ? ' ' + type : '');
+    }
+
+    function copyDescription() {
+        const btn = document.getElementById('copyBtn');
+        const text = humanDesc.textContent;
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        });
+    }
+
+    // Parse a single cron field into an array of valid integers
+    function parseField(field, min, max, nameMap) {
+        const values = new Set();
+        const parts = field.split(',');
+        for (const part of parts) {
+            let p = part.trim().toLowerCase();
+            // Replace names with numbers
+            if (nameMap) {
+                for (const [name, num] of Object.entries(nameMap)) {
+                    p = p.replace(new RegExp(name, 'gi'), String(num));
+                }
+            }
+            // Handle */n
+            if (p.startsWith('*/')) {
+                const step = parseInt(p.slice(2));
+                if (isNaN(step) || step <= 0) throw new Error('Invalid step: ' + part);
+                for (let i = min; i <= max; i += step) values.add(i);
+            }
+            // Handle n-m/s or n-m
+            else if (p.includes('-')) {
+                const [rangePart, stepPart] = p.split('/');
+                const [startStr, endStr] = rangePart.split('-');
+                const start = parseInt(startStr);
+                const end = parseInt(endStr);
+                const step = stepPart ? parseInt(stepPart) : 1;
+                if (isNaN(start) || isNaN(end) || isNaN(step)) throw new Error('Invalid range: ' + part);
+                if (start < min || end > max) throw new Error('Out of range: ' + part);
+                for (let i = start; i <= end; i += step) values.add(i);
+            }
+            // Handle *
+            else if (p === '*') {
+                for (let i = min; i <= max; i++) values.add(i);
+            }
+            // Handle single number
+            else {
+                const n = parseInt(p);
+                if (isNaN(n) || n < min || n > max) throw new Error('Invalid value: ' + part + ' (expected ' + min + '-' + max + ')');
+                values.add(n);
+            }
+        }
+        return Array.from(values).sort((a, b) => a - b);
+    }
+
+    // Describe a field in English
+    function describeField(field, min, max, nameMap, unitSingular, unitPlural, namesList) {
+        let f = field.trim().toLowerCase();
+        if (nameMap) {
+            for (const [name, num] of Object.entries(nameMap)) {
+                f = f.replace(new RegExp(name, 'gi'), String(num));
+            }
+        }
+        if (f === '*') return null; // means "every"
+        if (f.startsWith('*/')) {
+            const step = parseInt(f.slice(2));
+            return 'every ' + step + ' ' + (step === 1 ? unitPlural : unitPlural);
+        }
+        if (f.includes('-') && !f.includes(',') && !f.includes('/')) {
+            const [s, e] = f.split('-').map(Number);
+            const sn = namesList ? namesList[s] : s;
+            const en = namesList ? namesList[e] : e;
+            return sn + ' through ' + en;
+        }
+        // Specific values
+        const vals = f.split(',').map(v => v.trim());
+        const named = vals.map(v => {
+            if (v.includes('-')) {
+                const [s, e] = v.split('-').map(Number);
+                const sn = namesList ? namesList[s] : s;
+                const en = namesList ? namesList[e] : e;
+                return sn + ' through ' + en;
+            }
+            const n = parseInt(v);
+            return namesList ? namesList[n] : n;
+        });
+        return named.join(', ');
+    }
+
+    function buildDescription(fields) {
+        const [minF, hourF, domF, monF, dowF] = fields;
+        const parts = [];
+
+        // Minute + Hour combine naturally
+        const isEveryMin = minF === '*';
+        const isEveryHour = hourF === '*';
+        const isEveryDom = domF === '*';
+        const isEveryMon = monF === '*';
+        const isEveryDow = dowF === '*';
+
+        // Start with frequency
+        if (isEveryMin && isEveryHour && isEveryDom && isEveryMon && isEveryDow) {
+            return 'Every minute';
+        }
+
+        // Time description
+        if (minF.startsWith('*/')) {
+            const step = parseInt(minF.slice(2));
+            parts.push('Every ' + step + ' minute' + (step > 1 ? 's' : ''));
+        } else if (isEveryMin && !isEveryHour) {
+            parts.push('Every minute');
+        } else if (!isEveryMin && isEveryHour) {
+            const minDesc = describeField(minF, 0, 59, null, 'minute', 'minutes', null);
+            parts.push('At minute ' + minDesc + ' of every hour');
+        } else if (!isEveryMin && !isEveryHour) {
+            // Specific time(s)
+            const mins = parseField(minF, 0, 59, null);
+            const hours = parseField(hourF, 0, 23, null);
+            if (mins.length === 1 && hours.length === 1) {
+                const h = hours[0];
+                const m = mins[0];
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                parts.push('At ' + h12 + ':' + String(m).padStart(2, '0') + ' ' + ampm);
+            } else if (mins.length === 1) {
+                const m = mins[0];
+                const hourDesc = describeField(hourF, 0, 23, null, 'hour', 'hours', null);
+                parts.push('At minute ' + m + ' past hour ' + hourDesc);
+            } else {
+                const minDesc = describeField(minF, 0, 59, null, 'minute', 'minutes', null);
+                const hourDesc = describeField(hourF, 0, 23, null, 'hour', 'hours', null);
+                parts.push('At minute ' + minDesc + ' past hour ' + hourDesc);
+            }
+        } else if (isEveryMin && isEveryHour) {
+            parts.push('Every minute');
+        }
+
+        // If hourF has step
+        if (hourF.startsWith('*/')) {
+            const step = parseInt(hourF.slice(2));
+            if (!minF.startsWith('*/') && isEveryMin) {
+                parts.length = 0;
+                parts.push('Every minute, every ' + step + ' hour' + (step > 1 ? 's' : ''));
+            } else if (!minF.startsWith('*/') && !isEveryMin) {
+                // Already handled above
+            } else {
+                parts.push('every ' + step + ' hour' + (step > 1 ? 's' : ''));
+            }
+        }
+
+        // Day of month
+        if (!isEveryDom) {
+            const domDesc = describeField(domF, 1, 31, null, 'day', 'days', null);
+            parts.push('on day-of-month ' + domDesc);
+        }
+
+        // Month
+        if (!isEveryMon) {
+            const monDesc = describeField(monF, 1, 12, MONTH_MAP, 'month', 'months', MONTH_NAMES);
+            parts.push('in ' + monDesc);
+        }
+
+        // Day of week
+        if (!isEveryDow) {
+            const dowDesc = describeField(dowF, 0, 6, DOW_MAP, 'day', 'days', DOW_NAMES);
+            parts.push('on ' + dowDesc);
+        }
+
+        let result = parts.join(', ');
+        // Capitalize first letter
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    }
+
+    // Calculate next N run times
+    function getNextRuns(fields, count) {
+        const [minVals, hourVals, domVals, monVals, dowVals] = fields.map((f, i) => {
+            const ranges = [[0,59],[0,23],[1,31],[1,12],[0,6]];
+            const maps = [null, null, null, MONTH_MAP, DOW_MAP];
+            return parseField(f, ranges[i][0], ranges[i][1], maps[i]);
+        });
+
+        const runs = [];
+        const now = new Date();
+        let d = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1, 0, 0);
+
+        const maxIter = 525960; // ~1 year of minutes
+        let iter = 0;
+        while (runs.length < count && iter < maxIter) {
+            iter++;
+            const month = d.getMonth() + 1;
+            const dom = d.getDate();
+            const dow = d.getDay();
+            const hour = d.getHours();
+            const min = d.getMinutes();
+
+            if (monVals.includes(month) &&
+                domVals.includes(dom) &&
+                dowVals.includes(dow) &&
+                hourVals.includes(hour) &&
+                minVals.includes(min)) {
+                runs.push(new Date(d));
+            }
+            d.setMinutes(d.getMinutes() + 1);
+        }
+        return runs;
+    }
+
+    function formatRun(date) {
+        const opts = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+        return date.toLocaleString('en-US', opts);
+    }
+
+    function parseCron() {
+        let expr = cronInput.value.trim();
+        if (!expr) {
+            setStatus('Enter a cron expression to parse', '');
+            humanDesc.textContent = '';
+            scheduleList.innerHTML = '';
+            return;
+        }
+
+        // Handle shortcuts
+        const lower = expr.toLowerCase();
+        if (SHORTCUTS[lower]) {
+            expr = SHORTCUTS[lower];
+        }
+
+        const fields = expr.split(/\s+/);
+        if (fields.length !== 5) {
+            setStatus('Invalid: expected 5 fields (minute hour day month weekday)', 'error');
+            humanDesc.textContent = 'Could not parse expression.';
+            scheduleList.innerHTML = '';
+            return;
+        }
+
+        try {
+            // Validate all fields parse correctly
+            const ranges = [[0,59],[0,23],[1,31],[1,12],[0,6]];
+            const maps = [null, null, null, MONTH_MAP, DOW_MAP];
+            for (let i = 0; i < 5; i++) {
+                parseField(fields[i], ranges[i][0], ranges[i][1], maps[i]);
+            }
+
+            // Build description
+            const desc = buildDescription(fields);
+            humanDesc.textContent = desc;
+
+            // Calculate next runs
+            const runs = getNextRuns(fields, 10);
+            scheduleList.innerHTML = '';
+            if (runs.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'No runs found in the next year';
+                scheduleList.appendChild(li);
+            } else {
+                runs.forEach((run, i) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = '<span class="run-num">#' + (i + 1) + '</span>' + formatRun(run);
+                    scheduleList.appendChild(li);
+                });
+            }
+
+            const shortcutLabel = SHORTCUTS[lower] ? ' (shortcut for ' + SHORTCUTS[lower] + ')' : '';
+            setStatus('Valid cron expression' + shortcutLabel, 'success');
+
+        } catch (err) {
+            setStatus('Invalid: ' + err.message, 'error');
+            humanDesc.textContent = 'Could not parse expression.';
+            scheduleList.innerHTML = '';
+        }
+    }
+
+    cronInput.addEventListener('input', parseCron);
+    // Parse on load
+    parseCron();
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Cron Expression Parser - TextForge",
+        "description": "Parse and explain cron expressions in plain English. See next scheduled run times. Supports standard 5-field cron syntax. Free, no signup required.",
+        "url": "https://austinkc91.github.io/text-tools/cron-parser/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+</body>
+</html>
