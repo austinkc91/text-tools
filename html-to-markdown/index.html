@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free HTML to Markdown Converter Online - Instant Conversion | TextForge</title>
+    <meta name="description" content="Convert HTML to clean Markdown format instantly. Handles headings, links, images, lists, tables, code blocks, and more. Free, no signup required.">
+    <meta name="keywords" content="html to markdown, html converter, html to md, convert html, markdown converter, html to markdown online, html to markdown free">
+    <meta property="og:title" content="Free HTML to Markdown Converter Online - Instant Conversion">
+    <meta property="og:description" content="Convert HTML to clean Markdown format instantly. Handles headings, links, images, lists, tables, code blocks, and more. Free, no signup required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://austinkc91.github.io/text-tools/html-to-markdown/">
+    <link rel="canonical" href="https://austinkc91.github.io/text-tools/html-to-markdown/">
+    <style>
+        :root {
+            --bg: #0f1117; --surface: #1a1d27; --surface2: #242736;
+            --border: #2e3145; --text: #e4e4e7; --muted: #9ca3af;
+            --accent: #6366f1; --accent2: #818cf8; --green: #34d399;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { color: var(--accent2); }
+        h1 { font-size: 1.8rem; margin: 32px 0 8px; }
+        .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+        .options-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; }
+        .opt-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+        .opt-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .opt-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        @media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } }
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+        .panel-title { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .panel-actions { display: flex; gap: 8px; align-items: center; }
+        textarea { width: 100%; min-height: 320px; padding: 16px; background: transparent; border: none; color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; resize: vertical; outline: none; line-height: 1.7; }
+        textarea::placeholder { color: #4b5068; }
+        .copy-btn { padding: 6px 14px; background: var(--accent); border: none; border-radius: 6px; color: white; font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .copy-btn:hover { background: var(--accent2); }
+        .copy-btn.copied { background: var(--green); }
+        .action-btn { padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.8rem; cursor: pointer; transition: all 0.15s; }
+        .action-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .promo { background: linear-gradient(135deg, #1e1b4b, #312e81); border: 1px solid #4338ca; border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .promo-text h3 { font-size: 1rem; margin-bottom: 4px; }
+        .promo-text p { font-size: 0.85rem; color: var(--muted); }
+        .promo-link { padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+        .promo-link:hover { background: var(--accent2); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 32px 0; }
+        .tool-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text); transition: border-color 0.15s; }
+        .tool-card:hover { border-color: var(--accent); }
+        .tool-card h3 { font-size: 0.9rem; margin-bottom: 4px; }
+        .tool-card p { font-size: 0.8rem; color: var(--muted); }
+        footer { padding: 24px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; }
+        footer a { color: var(--accent2); text-decoration: none; }
+        .email-capture { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 24px 0; text-align: center; }
+        .email-capture h3 { margin-bottom: 8px; font-size: 1rem; }
+        .email-capture p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+        .email-form { display: flex; gap: 8px; justify-content: center; max-width: 400px; margin: 0 auto; }
+        .email-form input { flex: 1; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.85rem; outline: none; }
+        .email-form input:focus { border-color: var(--accent); }
+        .email-form button { padding: 10px 20px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .info-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; font-size: 0.85rem; color: var(--muted); }
+        .info-box strong { color: var(--text); }
+        .badge { display: inline-block; padding: 2px 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; font-size: 0.75rem; color: var(--muted); margin-right: 6px; font-family: 'SF Mono', 'Fira Code', monospace; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://austinkc91.github.io/text-tools/" class="logo">TextForge</a>
+            <a href="https://austinkc91.github.io/text-tools/" class="back-link">All Tools</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>HTML to Markdown Converter</h1>
+        <p class="subtitle">Convert HTML to clean, readable Markdown instantly. Paste your HTML on the left and get Markdown on the right. Handles headings, links, images, lists, tables, code blocks, and more.</p>
+
+        <div class="info-box">
+            Supports: <span class="badge">h1-h6</span><span class="badge">bold / italic</span><span class="badge">links</span><span class="badge">images</span><span class="badge">ul / ol</span><span class="badge">blockquote</span><span class="badge">code / pre</span><span class="badge">tables</span><span class="badge">br / hr</span><span class="badge">paragraphs</span>
+        </div>
+
+        <div class="workspace">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">HTML Input</span>
+                    <div class="panel-actions">
+                        <button class="action-btn" onclick="pasteHTML()">Paste HTML</button>
+                        <button class="action-btn" onclick="clearInput()">Clear</button>
+                    </div>
+                </div>
+                <textarea id="input" placeholder="Paste your HTML here...&#10;&#10;Example:&#10;&lt;h1&gt;Hello World&lt;/h1&gt;&#10;&lt;p&gt;This is a &lt;strong&gt;bold&lt;/strong&gt; paragraph.&lt;/p&gt;&#10;&lt;ul&gt;&lt;li&gt;Item one&lt;/li&gt;&lt;li&gt;Item two&lt;/li&gt;&lt;/ul&gt;"></textarea>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">Markdown Output</span>
+                    <div class="panel-actions">
+                        <button class="action-btn" onclick="downloadMD()">Download .md</button>
+                        <button class="copy-btn" id="copyBtn" onclick="copyOutput()">Copy</button>
+                    </div>
+                </div>
+                <textarea id="output" placeholder="Markdown will appear here..." readonly></textarea>
+            </div>
+        </div>
+
+        <div class="promo">
+            <div class="promo-text">
+                <h3>Level up your AI game</h3>
+                <p>100+ battle-tested prompts for business, coding, and content. Copy-paste ready.</p>
+            </div>
+            <a href="https://austinkc91.github.io/prompt-vault/" class="promo-link">Get the Playbook &mdash; $9</a>
+        </div>
+
+        <div class="email-capture">
+            <h3>Get free text tool updates</h3>
+            <p>New tools added monthly. No spam, just utility.</p>
+            <form class="email-form" action="https://formsubmit.co/clawbot91@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="TextForge Email Signup (HTML to Markdown)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.1rem; margin-top:40px; margin-bottom:16px;">More Free Tools</h2>
+        <div class="tools-grid">
+            <a href="https://austinkc91.github.io/text-tools/case-converter/" class="tool-card"><h3>Case Converter</h3><p>UPPER, lower, Title, camelCase and more</p></a>
+            <a href="https://austinkc91.github.io/text-tools/word-counter/" class="tool-card"><h3>Word Counter</h3><p>Count words, characters, sentences</p></a>
+            <a href="https://austinkc91.github.io/text-tools/json-formatter/" class="tool-card"><h3>JSON Formatter</h3><p>Format, validate, and minify JSON</p></a>
+            <a href="https://austinkc91.github.io/text-tools/markdown-preview/" class="tool-card"><h3>Markdown Preview</h3><p>Preview Markdown as formatted text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/base64-encoder-decoder/" class="tool-card"><h3>Base64 Encoder/Decoder</h3><p>Encode and decode Base64 text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/url-encoder-decoder/" class="tool-card"><h3>URL Encoder/Decoder</h3><p>Encode and decode URLs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/slug-generator/" class="tool-card"><h3>Slug Generator</h3><p>Create URL-friendly slugs</p></a>
+            <a href="https://austinkc91.github.io/text-tools/lorem-ipsum-generator/" class="tool-card"><h3>Lorem Ipsum Generator</h3><p>Generate placeholder text</p></a>
+            <a href="https://austinkc91.github.io/text-tools/hash-generator/" class="tool-card"><h3>Hash Generator</h3><p>Calculate SHA-256 and SHA-1 hashes</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-diff/" class="tool-card"><h3>Text Diff</h3><p>Compare two texts side by side</p></a>
+            <a href="https://austinkc91.github.io/text-tools/regex-tester/" class="tool-card"><h3>Regex Tester</h3><p>Test regular expressions</p></a>
+            <a href="https://austinkc91.github.io/text-tools/text-cleaner/" class="tool-card"><h3>Text Cleaner</h3><p>Clean up messy text</p></a>
+        </div>
+
+        <div class="promo" style="background: linear-gradient(135deg, #1a2e1a, #1e3a2e); border-color: #166534;">
+            <div class="promo-text">
+                <h3>BAS/HVAC professionals</h3>
+                <p>Complete field reference: control sequences, troubleshooting flowcharts, commissioning checklists.</p>
+            </div>
+            <a href="https://austinkc91.github.io/bas-field-guide/" class="promo-link" style="background: #059669;">Field Guide &mdash; $14</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>TextForge &mdash; Built with care. Free forever.</p>
+            <p style="margin-top: 8px;">
+                <a href="https://austinkc91.github.io/prompt-vault/">Prompt Vault</a> &middot;
+                <a href="https://austinkc91.github.io/bas-field-guide/">BAS Field Guide</a> &middot;
+                <a href="https://austinkc91.github.io/text-tools/">All Tools</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+
+    // ---------------------------------------------------------------------------
+    // Core HTML -> Markdown conversion (no external libs, pure DOM + regex)
+    // ---------------------------------------------------------------------------
+    function htmlToMarkdown(html) {
+        if (!html.trim()) return '';
+
+        // Parse into a temporary DOM node so we can walk the tree
+        const div = document.createElement('div');
+        div.innerHTML = html;
+
+        return nodeToMarkdown(div).trim();
+    }
+
+    function nodeToMarkdown(node, ctx) {
+        ctx = ctx || { listDepth: 0, listType: null };
+        let out = '';
+
+        for (const child of node.childNodes) {
+            out += convertNode(child, ctx);
+        }
+        return out;
+    }
+
+    function convertNode(node, ctx) {
+        // Text node
+        if (node.nodeType === 3) {
+            // Preserve meaningful whitespace but collapse runs
+            const text = node.textContent.replace(/\r\n|\r/g, '\n');
+            // Inside pre/code the parent handles it; here just return the text
+            return text;
+        }
+
+        if (node.nodeType !== 1) return ''; // not an element
+
+        const tag = node.tagName.toLowerCase();
+        const inner = () => nodeToMarkdown(node, ctx);
+        const innerTrimmed = () => inner().trim();
+
+        switch (tag) {
+            // ----- Block elements -----
+            case 'h1': return '\n\n# ' + innerTrimmed() + '\n\n';
+            case 'h2': return '\n\n## ' + innerTrimmed() + '\n\n';
+            case 'h3': return '\n\n### ' + innerTrimmed() + '\n\n';
+            case 'h4': return '\n\n#### ' + innerTrimmed() + '\n\n';
+            case 'h5': return '\n\n##### ' + innerTrimmed() + '\n\n';
+            case 'h6': return '\n\n###### ' + innerTrimmed() + '\n\n';
+
+            case 'p': {
+                const content = innerTrimmed();
+                return content ? '\n\n' + content + '\n\n' : '';
+            }
+
+            case 'br': return '  \n';
+            case 'hr': return '\n\n---\n\n';
+
+            case 'div': {
+                const content = inner();
+                // If it already contains block-level newlines, just return it
+                if (content.includes('\n')) return content;
+                return content ? '\n\n' + content.trim() + '\n\n' : '';
+            }
+
+            case 'blockquote': {
+                const lines = innerTrimmed().split('\n');
+                return '\n\n' + lines.map(l => '> ' + l).join('\n') + '\n\n';
+            }
+
+            // ----- Code -----
+            case 'pre': {
+                // Look for nested code tag to grab language class
+                const codeEl = node.querySelector('code');
+                let lang = '';
+                if (codeEl) {
+                    const cls = codeEl.className || '';
+                    const m = cls.match(/language-(\S+)/);
+                    if (m) lang = m[1];
+                }
+                const codeText = (codeEl ? codeEl.textContent : node.textContent);
+                return '\n\n```' + lang + '\n' + codeText + '\n```\n\n';
+            }
+
+            case 'code': {
+                // Inline code (pre > code is handled above)
+                if (node.parentElement && node.parentElement.tagName.toLowerCase() === 'pre') {
+                    return node.textContent; // will be wrapped by pre handler
+                }
+                return '`' + node.textContent + '`';
+            }
+
+            // ----- Inline formatting -----
+            case 'strong':
+            case 'b': {
+                const content = innerTrimmed();
+                return content ? '**' + content + '**' : '';
+            }
+
+            case 'em':
+            case 'i': {
+                const content = innerTrimmed();
+                return content ? '_' + content + '_' : '';
+            }
+
+            case 's':
+            case 'strike':
+            case 'del': {
+                const content = innerTrimmed();
+                return content ? '~~' + content + '~~' : '';
+            }
+
+            // ----- Links & images -----
+            case 'a': {
+                const href = node.getAttribute('href') || '';
+                const title = node.getAttribute('title');
+                const text = innerTrimmed() || href;
+                if (!href) return text;
+                const titlePart = title ? ' "' + title + '"' : '';
+                return '[' + text + '](' + href + titlePart + ')';
+            }
+
+            case 'img': {
+                const src = node.getAttribute('src') || '';
+                const alt = node.getAttribute('alt') || '';
+                const title = node.getAttribute('title');
+                const titlePart = title ? ' "' + title + '"' : '';
+                return '![' + alt + '](' + src + titlePart + ')';
+            }
+
+            // ----- Lists -----
+            case 'ul': {
+                const newCtx = { listDepth: ctx.listDepth + 1, listType: 'ul' };
+                const items = [];
+                for (const child of node.childNodes) {
+                    if (child.nodeType === 1 && child.tagName.toLowerCase() === 'li') {
+                        items.push(child);
+                    }
+                }
+                const indent = '  '.repeat(ctx.listDepth);
+                const result = items.map(li => {
+                    const liContent = nodeToMarkdown(li, newCtx).trim();
+                    return indent + '- ' + liContent;
+                }).join('\n');
+                return (ctx.listDepth === 0 ? '\n\n' : '\n') + result + (ctx.listDepth === 0 ? '\n\n' : '');
+            }
+
+            case 'ol': {
+                const newCtx = { listDepth: ctx.listDepth + 1, listType: 'ol' };
+                const items = [];
+                for (const child of node.childNodes) {
+                    if (child.nodeType === 1 && child.tagName.toLowerCase() === 'li') {
+                        items.push(child);
+                    }
+                }
+                const indent = '  '.repeat(ctx.listDepth);
+                const result = items.map((li, i) => {
+                    const liContent = nodeToMarkdown(li, newCtx).trim();
+                    return indent + (i + 1) + '. ' + liContent;
+                }).join('\n');
+                return (ctx.listDepth === 0 ? '\n\n' : '\n') + result + (ctx.listDepth === 0 ? '\n\n' : '');
+            }
+
+            case 'li': {
+                // Handled by parent ul/ol
+                return nodeToMarkdown(node, ctx);
+            }
+
+            // ----- Tables -----
+            case 'table': {
+                return '\n\n' + convertTable(node) + '\n\n';
+            }
+
+            // Skip thead/tbody/tfoot as structural wrappers — rows handle themselves
+            case 'thead':
+            case 'tbody':
+            case 'tfoot':
+                return nodeToMarkdown(node, ctx);
+
+            // Ignore purely structural / non-content tags
+            case 'script':
+            case 'style':
+            case 'head':
+            case 'meta':
+            case 'link':
+                return '';
+
+            // Span and other inline wrappers — just pass through
+            default:
+                return inner();
+        }
+    }
+
+    function convertTable(tableNode) {
+        const rows = [];
+        tableNode.querySelectorAll('tr').forEach(tr => {
+            const cells = [];
+            tr.querySelectorAll('td, th').forEach(cell => {
+                cells.push(nodeToMarkdown(cell, {}).trim().replace(/\|/g, '\\|'));
+            });
+            rows.push(cells);
+        });
+
+        if (rows.length === 0) return '';
+
+        const colCount = Math.max(...rows.map(r => r.length));
+
+        // Pad rows to same column count
+        const padded = rows.map(r => {
+            while (r.length < colCount) r.push('');
+            return r;
+        });
+
+        const header = padded[0];
+        const separator = header.map(() => '---');
+        const body = padded.slice(1);
+
+        const rowToMd = cells => '| ' + cells.join(' | ') + ' |';
+
+        const lines = [rowToMd(header), rowToMd(separator)];
+        body.forEach(r => lines.push(rowToMd(r)));
+        return lines.join('\n');
+    }
+
+    // Post-process: collapse 3+ blank lines to 2, trim leading/trailing whitespace
+    function postProcess(md) {
+        return md
+            .replace(/\n{3,}/g, '\n\n')
+            .trim();
+    }
+
+    // ---------------------------------------------------------------------------
+    // UI wiring
+    // ---------------------------------------------------------------------------
+    function runConvert() {
+        const raw = input.value;
+        if (!raw.trim()) {
+            output.value = '';
+            return;
+        }
+        try {
+            const md = postProcess(htmlToMarkdown(raw));
+            output.value = md;
+        } catch (e) {
+            output.value = '// Error during conversion: ' + e.message;
+        }
+    }
+
+    input.addEventListener('input', runConvert);
+
+    function copyOutput() {
+        const btn = document.getElementById('copyBtn');
+        navigator.clipboard.writeText(output.value).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        });
+    }
+
+    function downloadMD() {
+        if (!output.value.trim()) return;
+        const blob = new Blob([output.value], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'converted.md';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function pasteHTML() {
+        navigator.clipboard.readText().then(text => {
+            input.value = text;
+            runConvert();
+        }).catch(() => {
+            input.focus();
+            document.execCommand('paste');
+        });
+    }
+
+    function clearInput() {
+        input.value = '';
+        output.value = '';
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "HTML to Markdown Converter - TextForge",
+        "description": "Convert HTML to clean Markdown format instantly. Handles headings, links, images, lists, tables, code blocks, and more. Free, no signup required.",
+        "url": "https://austinkc91.github.io/text-tools/html-to-markdown/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+</body>
+</html>
